@@ -10,43 +10,65 @@
 
     <style>
         html { font-size: 16px; }
-        body { font-family: 'Poppins', 'Harmattan', Arial, sans-serif; background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%); color: #343a40; margin: 0; padding: 0.625rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .screen { width: 100%; max-width: 75rem; margin: auto; background: #ffffff; border-radius: 0.9375rem; box-shadow: 0 0.5rem 1.5625rem rgba(0, 0, 0, 0.08); padding: 0.9375rem; box-sizing: border-box; display: none; min-height: calc(100vh - 2.5rem); max-height: calc(100vh - 2.5rem); display: flex; flex-direction: column; }
+        body { font-family: 'Poppins', 'Harmattan', Arial, sans-serif; background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%); color: #343a40; margin: 0; padding: 0.625rem; display: flex; /* Body'nin flex olması screen'i ortalamaya yardımcı olur */ justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; overflow-y: auto; }
+
+        .screen {
+            width: 100%;
+            max-width: 50rem; /* İçerik max genişliği */
+            margin: 1rem auto;
+            background-color: #ffffff; /* Ana beyaz kutu geri geldi */
+            border-radius: 0.9375rem;
+            box-shadow: 0 0.5rem 1.5625rem rgba(0, 0, 0, 0.08);
+            padding: 0.9375rem; /* İç boşluk geri geldi */
+            box-sizing: border-box;
+            display: none; /* JS ile gösterilecek */
+            flex-direction: column;
+            align-items: center; /* İçeriği yatayda ortala */
+            /* Yükseklik kaldırıldı, içerik belirlesin */
+             /* min-height/max-height kaldırıldı */
+        }
         .screen.active { display: flex; }
-        #homeScreen.screen.active { justify-content: center; }
-        #gameScreen { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0; }
+        #gameScreen { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0; width: 100%; }
 
         #homeScreen { text-align: center; }
         .title-container { display: flex; justify-content: center; align-items: center; gap: 0.9375rem; margin-bottom: 0.9375rem; }
-        .title-container .emoji { font-size: 3.5rem; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-0.9375rem);} 60% {transform: translateY(-0.5rem);} }
-        .title-text h1 { font-size: 3rem; color: #004085; margin: 0; font-family: 'Poppins', sans-serif; text-shadow: 1px 1px 0 #d4eaff, 0.1875rem 0.1875rem 0.375rem rgba(0,0,0,0.05); }
+        .title-container .emoji { font-size: 3.5rem; }
+        .title-text h1 { font-size: 3rem; color: #004085; margin: 0; font-family: 'Poppins', sans-serif; text-shadow: 1px 1px 0 #d4eaff; }
         .title-text h2 { font-size: 2.2rem; font-weight: 700; color: #007bff; margin: 0; text-shadow: 1px 1px 0 #d4eaff; font-family: 'Harmattan', sans-serif; }
-        #homeScreen h3 { font-size: 1.3rem; font-family: 'Poppins', sans-serif; color: #6c757d; border-bottom: 1px solid #e9ecef; padding-bottom: 0.5rem; margin-top: 0.9375rem; }
-        #levelSelect { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; max-width: 21.875rem; margin: 0.625rem auto; }
+        #homeScreen h3 { font-size: 1.3rem; font-family: 'Poppins', sans-serif; color: #6c757d; /* Biraz koyulaştı */ padding-bottom: 0.3rem; margin-top: 0.625rem; font-weight: 400; border-bottom: 1px solid #e9ecef; /* Ayırıcı çizgi geri geldi */ }
+        #levelSelect { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; max-width: 21.875rem; width: 100%; margin: 0.5rem auto 0; }
 
-        .key-button { padding: 0.5rem 0.75rem; font-size: 1rem; font-weight: 600; font-family: 'Poppins', sans-serif; border: 1px solid #d1d9e6; border-bottom-width: 3px; border-radius: 0.375rem; cursor: pointer; transition: all 0.1s ease-out; color: #495057; background-color: #eaf2ff; box-shadow: 0 0.125rem 0.125rem rgba(0, 0, 0, 0.04); display: inline-flex; justify-content: center; align-items: center; line-height: 1.2; vertical-align: middle; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
-        .key-button:active:not(:disabled) { transform: translateY(0.125rem); border-bottom-width: 1px; box-shadow: 0 1px 1px rgba(0,0,0,0.05); background-color: #dce9ff; }
-        .key-button:hover:not(:disabled) { background-color: #dce9ff; transform: translateY(-1px); border-color: #b8c7e0; }
-        .level-btn { background: linear-gradient(145deg, #a7d7c5, #74b49b); border-color: #74b49b; border-bottom-color: #5c9986; color: white; font-weight: 700; font-size: 1.1rem; padding: 0.75rem 1.25rem; }
+        /* GÜNCELLENDİ: Daha Görünür Buton Stili */
+        .key-button {
+            padding: 0.5rem 0.75rem; font-size: 1rem; font-weight: 600; font-family: inherit;
+            border: 1px solid #d1d9e6; /* İnce kenarlık */
+            border-bottom-width: 2px; /* Alt kenarlık */
+            border-radius: 0.375rem; cursor: pointer; transition: all 0.1s ease-out;
+            color: #495057; background-color: #f8f9fa; /* Çok açık gri arka plan */
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); /* Hafif gölge */
+            display: inline-flex; justify-content: center; align-items: center; line-height: 1.2; vertical-align: middle; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+        }
+        .key-button:active:not(:disabled) { transform: translateY(1px); border-bottom-width: 1px; background-color: #e9ecef; }
+        .key-button:hover:not(:disabled) { background-color: #e9ecef; border-color: #adb5bd; }
+
+        .level-btn { background: linear-gradient(145deg, #a7d7c5, #74b49b); border-color: #74b49b; border-bottom-color: #5c9986; color: white; font-weight: 700; font-size: 1.3rem; padding: 0.75rem 1.25rem; }
         .level-btn.selected { background: linear-gradient(145deg, #79a2d8, #537bb8); border-color: #537bb8; border-bottom-color: #3e6093; box-shadow: 0 0 0.625rem rgba(83, 123, 184, 0.5); }
-        .action-btn { font-size: 1.3rem; border-radius: 0.5rem; padding: 0.75rem 1.5625rem; }
+        .level-btn:hover:not(.selected):not(:disabled) { background: linear-gradient(145deg, #b8e0d2, #8ccab3); border-color:#8ccab3; }
+        .level-btn:active:not(.selected):not(:disabled) { background: linear-gradient(145deg, #96c9b8, #74b49b); transform: translateY(1px); border-bottom-width: 1px; }
 
-        .game-header { display: flex; justify-content: flex-end; align-items: center; padding-bottom: 0.3125rem; border-bottom: 1px solid #dee2e6; margin-bottom: 0.625rem; flex-shrink: 0; }
+        .action-btn { font-size: 1.3rem; border-radius: 0.5rem; padding: 0.75rem 1.5625rem; }
+        #backToHomeButton { font-size: 1.8rem; width: 3.75rem; height: 3.125rem; padding: 0.5rem 0.9375rem; background: linear-gradient(145deg, #adb5bd, #6c757d); border-color: #6c757d; border-bottom-color: #5a6268; color: white; }
+        #backToHomeButton:hover:not(:disabled) { background: linear-gradient(145deg, #bec3c7, #7c858d); border-color: #7c858d; }
+        #backToHomeButton:active:not(:disabled) { background: linear-gradient(145deg, #adb5bd, #6c757d); transform: translateY(1px); border-bottom-width: 1px; }
+
+        /* Sayfa 2 */
+        .game-header { display: flex; justify-content: flex-end; align-items: center; padding-bottom: 0.3125rem; border-bottom: 1px solid #dee2e6; margin-bottom: 0.625rem; flex-shrink: 0; width: 100%; box-sizing: border-box;}
         .header-info { font-size: 1.3rem; font-weight: bold; font-family: 'Poppins', sans-serif; margin-left: 0.9375rem; }
         #timerDisplay { color: #e63946; margin-left: auto;}
         #mistakeCounter { color: #e63946; font-size: 1.5rem; letter-spacing: 1px; }
 
-        .game-main {
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            gap: 0.625rem;
-        }
-
-        .display-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0; flex-shrink: 0; max-width: 50rem; width: 100%; margin-left: auto; margin-right: auto; padding: 0.5rem 0; }
+        .game-main { text-align: center; flex-grow: 1; display: flex; flex-direction: column; min-height: 0; gap: 0.625rem; width: 100%; box-sizing: border-box; }
+        .display-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0; flex-shrink: 0; width: 100%; padding: 0.5rem 0; }
         #audioControl { order: -1; align-self: center; flex-shrink: 0; margin-right: 0.5rem; }
         #turkishWord, #arabicOutputContainer {
             flex: 1;
@@ -55,44 +77,29 @@
             display: flex;
             align-items: center;
             position: relative;
+            background-color: #f8f9fa; /* Hafif arka plan */
+            border: 1px solid #e9ecef; /* İnce kenarlık */
+            border-radius: 0.5rem; /* Yuvarlak köşeler */
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* İç gölge */
         }
-        #turkishWord {
-            justify-content: flex-end;
-            font-weight: 700; font-family: 'Poppins', sans-serif; color: #495057; font-size: clamp(1.4rem, 3vw, 2.2rem); overflow-wrap: break-word; word-break: break-word; text-align: right; line-height: 1.3;
-        }
-        #arabicOutputContainer {
-             gap: 0.5rem; direction: rtl; padding: 0.375rem 0.625rem;
-             border-bottom: 2px solid #ced4da;
-             margin-left: 0.5rem;
-             justify-content: center; /* İçeriği yatayda ortala (metin için ek) */
-        }
-        /* GÜNCELLENDİ: Arapça Yazı Ortala */
-        #arabicOutputDisplay {
-             width: auto; /* İçerik kadar genişlesin */
-             max-width: 100%; /* Ama taşmasın */
-             white-space: normal;
-             word-break: break-all;
-             text-align: center; /* METNİ ORTALA */
-             font-family: 'Harmattan', Arial, sans-serif; font-weight: 700; line-height: 1.3; border: none; background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default; font-size: clamp(1.6rem, 4vw, 3rem); transition: border-color 0.3s, background-color 0.3s;
-             color: #212529;
-        }
+        #turkishWord { justify-content: flex-end; font-weight: 700; font-family: 'Poppins', sans-serif; color: #495057; font-size: clamp(1.4rem, 3vw, 2.2rem); overflow-wrap: break-word; word-break: break-word; text-align: right; line-height: 1.3; }
+        #arabicOutputContainer { gap: 0.5rem; direction: rtl; padding: 0.375rem 0.625rem; border: 1px solid #ced4da; margin-left: 0.5rem; justify-content: center; background-color: #fff; }
+        #arabicOutputDisplay { width: auto; max-width: 100%; white-space: normal; word-break: break-all; text-align: center; font-family: 'Harmattan', Arial, sans-serif; font-weight: 700; line-height: 1.3; border: none; background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default; font-size: clamp(1.6rem, 4vw, 3rem); transition: border-color 0.3s, background-color 0.3s; color: #212529; }
         #arabicOutputDisplay.empty::before { content: '...'; color: #adb5bd; font-weight: normal; font-size: 1.3rem; opacity: 0.8; width: 100%; text-align: center;}
         #correctAnswerContainer { display: none !important; }
         #correctAnswerDisplay { display: none !important; }
 
         #letterBankContainer {
-            border-bottom: 1px solid #dee2e6;
-            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #e9ecef;
+            border-top: 1px solid #e9ecef;
             overflow-y: auto;
             padding: 0.9375rem 0.625rem;
             margin: auto 0;
             transition: box-shadow 0.3s;
             flex-shrink: 1;
-            /* background-color: #f8f9fa; */ /* Kutusuz */
-            max-width: 50rem;
+            background-color: #f8f9fa; /* Hafif arka plan */
             width: 100%;
-            margin-left: auto;
-            margin-right: auto;
+            box-sizing: border-box;
         }
         #letterBank {
             display: grid;
@@ -106,98 +113,69 @@
             margin: 0 auto;
         }
         .letter-bank-btn {
-            composes: key-button;
+            composes: key-button; /* Temel stil */
             font-family: 'Harmattan', Arial, sans-serif;
             font-weight: 700;
             font-size: 2.2rem;
-            width: 100%;
+            width: 100%; /* Grid hücresini doldur */
             height: 3.4375rem;
             padding: 0;
             margin: 0;
-            border-color: #ced4da;
-            border-bottom-color: #adb5bd;
-            background-color: #fff;
+            background-color: #fff; /* Beyaz butonlar */
+            color: #495057; /* Normal renk */
         }
-        .letter-bank-btn.hareke-char { align-items: center; font-size: 2rem; }
+        .letter-bank-btn.hareke-char { font-size: 2rem; }
         .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: 0.3125rem; }
         .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: 0.3125rem; }
         .letter-bank-btn.hareke-normal { align-items: center; }
         .letter-bank-btn.char-only { align-items: center; }
-        .letter-bank-btn:active { border-bottom-width: 1px; }
-        .letter-bank-btn.correct-form { background-color: #a7d7c5; border-color: #74b49b; border-bottom-color: #5c9986; color: #1f503e; cursor: default; }
-        .letter-bank-btn.error-form { background-color: #ffb3ba; border-color: #f7949d; border-bottom-color: #e5737d; color: #8e2430; animation: shake 0.3s ease-in-out; }
-        @keyframes shake {
-          10%, 90% { transform: translate3d(-1px, 0, 0); }
-          20%, 80% { transform: translate3d(2px, 0, 0); }
-          30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-          40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
+        /* Aktif/Hover efektleri key-button'dan geliyor */
+        .letter-bank-btn.correct-form { background-color: #d1e7dd !important; border-color: #74b49b; color: #155724 !important; cursor: default; }
+        .letter-bank-btn.error-form { background-color: #f8d7da !important; border-color: #f5c6cb; color: #721c24 !important; animation: shake 0.3s ease-in-out; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
 
         #helperGrid { display: none; }
         .char-btn { display: none; }
         .separator { display: none; }
-
         .tool-btn-danger { display: none; }
-        #audioControl button { composes: key-button; font-size: 2rem; width: 3.125rem; height: 3.125rem; padding: 0; color: white; font-family: 'Arial', sans-serif; flex-shrink: 0; background: linear-gradient(145deg, #81d4fa, #4fc3f7); border-color: #4fc3f7; border-bottom-color: #29b6f6; box-shadow: 0 0.25rem 0.5rem rgba(79, 195, 247, 0.15); font-size: 1.8rem; }
+        #audioControl button { font-size: 2rem; width: 3.125rem; height: 3.125rem; padding: 0; color: white; font-family: 'Arial', sans-serif; flex-shrink: 0; background: linear-gradient(145deg, #81d4fa, #4fc3f7); border-color: #4fc3f7; border-bottom-color: #29b6f6; box-shadow: 0 0.25rem 0.5rem rgba(79, 195, 247, 0.15); font-size: 1.8rem; }
+        #audioControl button:hover:not(:disabled) { background: linear-gradient(145deg, #9fe0fc, #6acff8); border-color: #6acff8; }
+        #audioControl button:active:not(:disabled) { background: linear-gradient(145deg, #6acff8, #4fc3f7); transform: translateY(1px); border-bottom-width: 1px;}
 
-        .highlight-active {
-            box-shadow: 0 0 0.625rem 0.25rem rgba(255, 193, 7, 0.6) !important;
-        }
+        .highlight-active { box-shadow: 0 0 0.625rem 0.25rem rgba(255, 193, 7, 0.4) !important; /* Daha yumuşak vurgu */ border-radius: 0.5rem; /* Vurgu için */ }
+        :disabled { background-color: #e9ecef !important; color: #adb5bd !important; border-color: #dee2e6 !important; border-bottom-color: #adb5bd !important; cursor: not-allowed !important; transform: none !important; box-shadow: none !important; opacity: 0.65 !important; }
+        .letter-bank-btn.correct-form:disabled { background-color: #d1e7dd !important; border-color: #74b49b !important; color: #155724 !important; opacity: 0.75 !important; }
 
-        :disabled { background-color: #e9ecef !important; color: #adb5bd !important; border-color: #dee2e6 !important; border-bottom-color: #adb5bd !important; cursor: not-allowed !important; transform: none !important; box-shadow: none !important; background-image: none !important; opacity: 0.65 !important; }
-         .letter-bank-btn.correct-form:disabled { background-color: #a7d7c5 !important; border-color: #74b49b !important; border-bottom-color: #5c9986 !important; color: #1f503e !important; opacity: 0.75 !important; }
-
-        .game-footer {
-            text-align: center;
-            flex-shrink: 0;
-            padding-top: 0.9375rem;
-            margin-top: auto;
-            border-top: 1px solid #dee2e6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 50rem;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .game-footer { text-align: center; flex-shrink: 0; padding-top: 0.625rem; /* Azaltıldı */ margin-top: auto; border-top: 1px solid #e9ecef; display: flex; justify-content: flex-start; align-items: center; width: 100%; padding-left: 0.9375rem; padding-right: 0.9375rem; box-sizing: border-box; }
         #checkButton { display: none; }
         #nextButton { display: none; }
-        #backToHomeButton { margin-left: 0; margin-right: 0; }
-
-        .action-btn { font-size: 1.3rem; composes: key-button; padding: 0.625rem 1.25rem; }
-        #backToHomeButton {
-             composes: key-button; background: linear-gradient(145deg, #adb5bd, #6c757d); border-color: #6c757d; border-bottom-color: #5a6268; color: white; padding: 0.5rem 0.9375rem; font-size: 1.8rem; width: 3.75rem; height: 3.125rem;
-         }
+        #backToHomeButton { margin-left: 0; margin-right: auto; }
 
         @media (max-width: 56.25rem) {
-             .display-row { flex-direction: column; max-width: 90%; }
-             #letterBankContainer { max-width: 90%; }
-             .game-footer { max-width: 90%; }
+             .display-row { flex-direction: column; max-width: 100%; padding: 0.3rem 0;}
+             #letterBankContainer { max-width: 100%; margin: 0.5rem 0;}
+             .game-footer { max-width: 100%; }
              #turkishWord, #arabicOutputContainer { width: 100%; text-align: center; justify-content: center; margin-bottom: 0.625rem; flex-basis: auto; }
              #arabicOutputContainer { direction: rtl; padding-left: 0.625rem; padding-right: 0.625rem; width: 100%; justify-content: center; }
               #arabicOutputDisplay { width: auto; white-space: normal; text-align: center; }
              #audioControl { order: 0; margin-bottom: 0.625rem; width: 4.375rem; height: 4.375rem;}
              #audioControl button { width: 100%; height: 100%; font-size: 2.2rem; }
-             /* #letterBank { grid-template-columns: repeat(auto-fit, minmax(3.4375rem, 1fr)); } */
         }
         @media (max-width: 48rem) {
-            .screen { padding: 0.625rem; min-height: calc(100vh - 1.25rem); max-height: calc(100vh - 1.25rem); }
+            /* .screen { padding: 0.625rem; } */
              #turkishWord, #arabicOutputDisplay { font-size: clamp(1.6rem, 4.5vw, 2.2rem); }
-             #audioControl button { font-size: 1.6rem; }
-             #audioControl { width: 2.8125rem; height: 2.8125rem;}
+             #audioControl button { font-size: 1.6rem; width: 2.8125rem; height: 2.8125rem;}
+             #audioControl { width: auto; height: auto;} /* Ses butonu küçülsün */
              .key-button { padding: 0.375rem 0.625rem; font-size: 0.9rem; }
              .action-btn { font-size: 1.1rem; padding: 0.625rem 1.25rem; }
              #backToHomeButton { font-size: 1.5rem; width: 3.125rem; height: 2.5rem; padding: 0.375rem 0.625rem; }
              .header-info { font-size: 1.1rem; }
              #mistakeCounter { font-size: 1.3rem; }
              .letter-bank-btn { font-size: 2rem; height: 3rem; }
-             /* #arabicOutputContainer { padding-left: 0.5rem; padding-right: 0.5rem; } */
              #letterBank { grid-template-columns: repeat(auto-fit, minmax(3.125rem, 1fr)); gap: 0.3125rem;}
         }
          @media (max-width: 31.25rem) {
                #audioControl button { font-size: 1.8rem; width: 2.5rem; height: 2.5rem; }
-                #audioControl { width: 2.8125rem; height: 2.8125rem;}
                 .letter-bank-btn { font-size: 1.8rem; height: 2.8125rem; grid-template-columns: repeat(auto-fit, minmax(2.8125rem, 1fr)); gap: 0.25rem;}
          }
     </style>
@@ -240,7 +218,7 @@
                      <div id="arabicOutputDisplay" class="arabic-output empty" dir="rtl" lang="ar"></div>
                      </div>
                  </div>
-            <div id="letterBankContainer" style="display: block;">
+            <div id="letterBankContainer">
                 <div id="letterBank"></div>
             </div>
         </main>
@@ -250,7 +228,7 @@
     </div>
 
     <script>
-        // *** GÜNCELLENDİ: JavaScript (Mobil Geri Tuşu Eklendi, checkAnswer güncellendi) ***
+        // *** GÜNCELLENDİ: JavaScript (Ekran Geçiş Düzeltmesi) ***
 
         const gameData = {
              1: { timePerLetter: 8, words: [ { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "لَعِبَ", base_ar:"لعب", tr: "Oyun oynama" }, { ar: "عَمَلٌ", base_ar:"عمل", tr: "Çalışma" }, { ar: "فَشَلٌ", base_ar:"فشل", tr: "Başarısızlık" }, { ar: "كَسَلٌ", base_ar:"كسل", tr: "Tembellik" }, { ar: "ذَهَبٍ", base_ar:"ذهب", tr: "Altın" }, { ar: "سَمَكٍ", base_ar:"سمك", tr: "Balık" }, { ar: "هُوَ", base_ar:"هو", tr: "O - erkek" }, { ar: "هِيَ", base_ar:"هي", tr: "O - kız" }, { ar: "مِنْ", base_ar:"من", tr: "-den, -dan" } ] },
@@ -273,8 +251,6 @@
         const turkishWordEl = document.getElementById('turkishWord');
         const arabicOutputEl = document.getElementById('arabicOutputDisplay');
         const correctAnswerDisplay = document.getElementById('correctAnswerDisplay');
-        // checkButton kaldırıldı
-        // nextButton kaldırıldı
         const letterBankContainer = document.getElementById('letterBankContainer');
         const letterBank = document.getElementById('letterBank');
 
@@ -333,26 +309,23 @@
             startGame();
         }
 
-        // GÜNCELLENDİ: startGame (History API eklendi)
+        // GÜNCELLENDİ: startGame (Ekran geçişini DOĞRUDAN display ile yapar)
         function startGame() {
             clearTimeout(autoNextTimeout);
             currentWordIndex = 0;
             levelWords = [...gameData[currentLevel].words].sort(() => Math.random() - 0.5);
-
             homeScreen.classList.remove('active');
-            homeScreen.style.display = 'none';
+            homeScreen.style.display = 'none'; // Kesinlikle gizle
             gameScreen.classList.add('active');
-            gameScreen.style.display = 'flex';
-
-            // Tarayıcı geçmişine bir giriş ekle (mobil geri tuşu için)
-            history.pushState({ screen: 'game' }, '', '#game'); // Adres çubuğuna #game ekle
-
+            gameScreen.style.display = 'flex'; // Kesinlikle göster
+            history.pushState({ screen: 'game' }, '', '#game');
             if (selectedLevelBtn) selectedLevelBtn.classList.remove('selected');
             selectedLevelBtn = document.querySelector(`.level-btn[data-level='${currentLevel}']`);
             if (selectedLevelBtn) selectedLevelBtn.classList.add('selected');
-            letterBankContainer.style.display = 'block';
+            letterBankContainer.style.display = 'block'; // Bu grid içinde olduğu için block kalmalı
             loadWord();
         }
+
 
         function loadWord() {
             clearTimeout(autoNextTimeout);
@@ -374,9 +347,8 @@
             updateMistakeDisplay();
             arabicOutputEl.textContent = '';
             arabicOutputEl.classList.add('empty');
-            arabicOutputEl.style.borderColor = '#ced4da';
-            arabicOutputEl.style.backgroundColor = 'transparent';
-            // Cevap kutusu gizlendi
+            arabicOutputEl.style.borderColor = '#ced4da'; // Renk sıfırlama
+            // arabicOutputEl.style.backgroundColor = 'transparent'; // Arka plan yok
             disableAllButtons(false);
             populateLetterBank();
             highlightExpectedInput();
@@ -415,7 +387,7 @@
             arabicOutputEl.textContent += char;
         }
 
-        // deleteLastChar fonksiyonu SİLİNDİ
+        // deleteLastChar SİLİNDİ
 
         function disableAllButtons(disabled) {
             letterBank.querySelectorAll('.letter-bank-btn').forEach(btn => {
@@ -448,7 +420,6 @@
             }, 1000);
         }
 
-        // GÜNCELLENDİ: checkAnswer (Cevap gizli, otomatik geçiş)
         function checkAnswer(timeUp = false) {
             if (!gameActive) return;
             gameActive = false;
@@ -456,30 +427,18 @@
             clearInterval(timerInterval);
             disableAllButtons(true);
             highlightExpectedInput(true);
-
             const constructedWord = arabicOutputEl.textContent;
             if(constructedWord === "") { arabicOutputEl.classList.add('empty'); }
             else { arabicOutputEl.classList.remove('empty'); }
-
             const targetWordForCheck = fullWordChars.join('');
             const isCorrect = constructedWord.trim() === targetWordForCheck.trim();
-
             arabicOutputEl.style.borderColor = isCorrect ? '#198754' : '#dc3545';
-            // Arka plan rengi değiştirilmiyor
-
             // Cevap kutusu gizli
-            // correctAnswerDisplay.textContent = originalWord;
-            // correctAnswerDisplay.classList.add('visible');
-
-            // Butonlar kaldırıldı
-
             if (isCorrect || timeUp || mistakesMade >= mistakesAllowed) {
                  const delay = (isCorrect || timeUp || mistakesMade >= mistakesAllowed) ? 1500 : 2500;
                  console.log(`Otomatik geçiş ${delay}ms sonra...`);
                  autoNextTimeout = setTimeout(nextWord, delay);
             } else {
-                 // Hatalı ama oyun bitmediyse: zamanlayıcıyı tekrar başlatıp oyunu aktif edebiliriz
-                 // VEYA direkt geçebiliriz. Şimdilik geçiyoruz:
                  const delay = 2500;
                  console.log(`Hatalı cevap, otomatik geçiş ${delay}ms sonra...`);
                  autoNextTimeout = setTimeout(nextWord, delay);
@@ -487,29 +446,27 @@
         }
 
         function nextWord() {
-            if (gameActive && currentWordIndex < levelWords.length -1) return; // Eğer hala aktifse (hızlı tıklama?) ve son kelime değilse, geçme
+            if (gameActive && currentWordIndex < levelWords.length -1) return;
             currentWordIndex++;
             loadWord();
         }
 
-        // GÜNCELLENDİ: showHomeScreen (History API eklendi)
+        // GÜNCELLENDİ: showHomeScreen (Ekran geçişini DOĞRUDAN display ile yapar)
         function showHomeScreen() {
             clearTimeout(autoNextTimeout);
             gameActive = false;
             clearInterval(timerInterval);
             gameScreen.classList.remove('active');
-            gameScreen.style.display = 'none';
+            gameScreen.style.display = 'none'; // Kesinlikle gizle
             homeScreen.classList.add('active');
-            homeScreen.style.display = 'flex';
-
-            // Adres çubuğundan #game'i kaldır ve geçmişte geri gitme
-            history.replaceState({ screen: 'home' }, '', window.location.pathname); // #game'i siler
-
+            homeScreen.style.display = 'flex'; // Kesinlikle göster
+            history.replaceState({ screen: 'home' }, '', window.location.pathname);
             if (selectedLevelBtn) {
                 selectedLevelBtn.classList.remove('selected');
                 selectedLevelBtn = null;
             }
         }
+
 
         function highlightExpectedInput(clear = false) {
              letterBankContainer.classList.remove('highlight-active');
@@ -528,8 +485,6 @@
 
         backToHomeButton.addEventListener('click', showHomeScreen);
         playAudioButton.addEventListener('click', playAudio);
-        // checkButton/nextButton listener kaldırıldı
-        // deleteLastCharButton listener kaldırıldı
 
         letterBank.addEventListener('click', (e) => {
             if (!gameActive) return;
@@ -549,7 +504,7 @@
                 expectedFullCharIndex++;
                 highlightExpectedInput();
                 if(expectedFullCharIndex === fullWordChars.length) {
-                      checkAnswer(false); // Kelime bitince kontrol et (otomatik geçişi tetikler)
+                      checkAnswer(false);
                  }
             } else {
                 registerMistake(clickedButton);
@@ -557,23 +512,21 @@
             }
         });
 
-        // GÜNCELLENDİ: Mobil geri tuşu dinleyicisi
         window.addEventListener('popstate', (event) => {
-             // Eğer oyun ekranı aktifse ve geri tuşuna basıldıysa (popstate geldi)
              if (gameScreen.classList.contains('active')) {
                  console.log("Mobil geri tuşu algılandı, ana ekrana dönülüyor...");
                  showHomeScreen();
              }
          });
 
+        // GÜNCELLENDİ: initializeApp (Ekran geçişini DOĞRUDAN display ile yapar)
         function initializeApp() {
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
-                screen.style.display = 'none';
+                screen.style.display = 'none'; // Başlangıçta hepsini gizle
             });
             homeScreen.classList.add('active');
-            homeScreen.style.display = 'flex';
-             // Başlangıçta adres çubuğunu temizle
+            homeScreen.style.display = 'flex'; // Sadece ana ekranı göster
              history.replaceState({ screen: 'home' }, '', window.location.pathname);
             populateVoices();
         }
