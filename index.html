@@ -71,11 +71,29 @@
         #scoreToHomeButton { font-size: 1.5rem; width: auto; min-width: 4rem; height: 3.5rem; padding: 0 1rem; background: var(--color-back-btn-bg); border-color: var(--color-back-btn-border); border-bottom-color: var(--color-back-btn-border-bottom); color: var(--color-back-btn-text); margin: 1.5rem auto 0; display: block; }
         #scoreToHomeButton:hover:not(:disabled) { background: linear-gradient(145deg, #e0e7e9, #c1cdd3); border-color: #c1cdd3; }
 
-        #gameHeader { position: relative; display: flex; justify-content: flex-end; align-items: center; padding-bottom: 0.3125rem; border-bottom: 1px solid #dee2e6; margin-bottom: 0.625rem; flex-shrink: 0; padding-left: 0.9375rem; padding-right: 0.9375rem; }
-        .header-info { font-size: 1.5rem; font-weight: bold; font-family: var(--font-poppins); margin-left: 0.9375rem; }
-        #levelScoreDisplay { color: var(--color-score); margin-right: auto; margin-left: 0;}
-        #timerDisplay { color: #e63946; }
-        #mistakeCounter { color: #e63946; font-size: 1.7rem; letter-spacing: 1px; }
+        #gameHeader {
+            position: relative; display: flex;
+            justify-content: space-between; /* Öğeleri dağıt */
+            align-items: center; padding-bottom: 0.3125rem; border-bottom: 1px solid #dee2e6;
+            margin-bottom: 0.625rem; flex-shrink: 0; padding-left: 0.9375rem; padding-right: 0.9375rem;
+        }
+        .header-info {
+            font-size: 1.5rem; font-weight: bold; font-family: var(--font-poppins);
+             /* Yan boşluklar kaldırıldı */
+        }
+        #levelScoreDisplay {
+            color: var(--color-score); margin-right: auto; margin-left: 0; /* Sola yasla */
+        }
+        #timerDisplay {
+            color: #e63946; margin-left: auto; margin-right: 0; /* Sağa yasla */
+        }
+        #mistakeCounter {
+            color: #e63946; font-size: 1.7rem; letter-spacing: 1px;
+            margin-left: 0.5rem; /* Soldakinden ayır */
+            margin-right: 0.5rem; /* Sağdakinden ayır */
+            /* Ortada kalacak */
+        }
+
         .game-main { text-align: center; flex-grow: 1; display: flex; flex-direction: column; min-height: 0; gap: 1rem; padding-left: 0; padding-right: 0; }
 
         #turkishWord, #arabicOutputContainer { padding: 0.375rem 0.625rem; min-height: 4rem; display: flex; align-items: center; position: relative; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 0.5rem; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); width: 100%; text-align: center; justify-content: center; flex-basis: auto; box-sizing: border-box; }
@@ -124,22 +142,24 @@
         #incorrectList h3 { font-size: 1.3rem; color: var(--color-error); margin-bottom: 0.5rem; text-align: center; }
         #incorrectList ul { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
         #incorrectList li { font-size: 1.1rem; color: var(--color-text-primary); padding: 0.3rem 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center; }
-        #incorrectList li span:first-child { font-family: var(--font-harmattan); font-size: 1.5rem; font-weight: bold; margin-left: 0.5rem; direction: rtl; }
-        #incorrectList li span:last-child { font-size: 1rem; color: #777; }
+        #incorrectList li span:first-child { font-size: 1rem; color: #777; }
+        #incorrectList li span:last-child { font-family: var(--font-harmattan); font-size: 1.5rem; font-weight: bold; margin-left: 0.5rem; direction: rtl; }
 
         @media (max-width: 31.25rem) { /* 500px */
              #turkishWord, #arabicOutputDisplay { font-size: clamp(1.8rem, 5vw, 3rem); }
-             .header-info { font-size: 1.3rem; } #mistakeCounter { font-size: 1.5rem; }
+             .header-info { font-size: 1.3rem; margin-left: 0.3rem; margin-right: 0.3rem; }
+             #mistakeCounter { font-size: 1.5rem; }
              .letter-bank-btn { font-size: 2.2rem; height: 3.5rem; width: 3.5rem; }
              #letterBank, .letter-bank-row { gap: 0.3125rem; }
              .back-button, #backToHomeButton { font-size: 1.8rem; width: 3.5rem; height: 3rem; }
              #audioControl button { font-size: 1.8rem; width: 3.5rem; height: 3rem; }
              #pointsBurst { font-size: 1rem; left: 4.5rem; }
              #scoreScreen h2 { font-size: 2rem; } #scoreScreen p { font-size: 1.5rem; }
-             #incorrectList h3 { font-size: 1.1rem; } #incorrectList li { font-size: 1rem;} #incorrectList li span:first-child { font-size: 1.3rem;} #incorrectList li span:last-child { font-size: 0.9rem;}
+             #incorrectList h3 { font-size: 1.1rem; } #incorrectList li { font-size: 1rem;} #incorrectList li span:last-child { font-size: 1.3rem;} #incorrectList li span:first-child { font-size: 0.9rem;}
         }
          @media (max-width: 25rem) { /* 400px */
-               .header-info { font-size: 1.1rem; } #mistakeCounter { font-size: 1.3rem; }
+               .header-info { font-size: 1.1rem; margin-left: 0.2rem; margin-right: 0.2rem;}
+               #mistakeCounter { font-size: 1.3rem; }
                .letter-bank-btn { font-size: 2rem; height: 3rem; width: 3rem; }
                #letterBank, .letter-bank-row { gap: 0.25rem; }
                .back-button, #backToHomeButton { font-size: 1.6rem; width: 3rem; height: 2.75rem; padding: 0; }
@@ -168,14 +188,7 @@
             <button class="level-btn key-button" data-level="7">Seviye 7</button>
             <button class="level-btn key-button" data-level="8">Seviye 8</button>
         </div>
-        <div id="modeSelectContainer" style="display: none;"> {/* Tamamen gizlendi */}
-             <h3>Oyun Modu</h3>
-             <div id="modeSelect">
-                 <button id="singlePlayerModeBtn" class="mode-btn key-button disabled-look" data-mode="single">Tek Kişilik</button>
-                 <button id="twoPlayerModeBtn" class="mode-btn key-button disabled-look" data-mode="two">İki Kişilik</button>
-             </div>
         </div>
-    </div>
 
     <div id="gameScreen" class="screen">
         <header id="gameHeader" class="game-header">
@@ -208,8 +221,6 @@
         <p id="singlePlayerScoreText">
             Puanınız: <span id="finalScoreValue">0</span> / <span id="totalPossibleScore">100</span>
         </p>
-        {/* İki kişilik skor kaldırıldı */}
-
         <div id="incorrectList" style="display: none;">
             <h3>Yanlış Kelimeler:</h3>
             <ul id="incorrectWordsUl"></ul>
@@ -240,7 +251,7 @@
         });
         console.log("Game data updated with audio sources:", gameData);
 
-        // --- DOM Elementleri (Sadeleştirildi) ---
+        // --- DOM Elementleri ---
         const homeScreen = document.getElementById('homeScreen');
         const gameScreen = document.getElementById('gameScreen');
         const scoreScreen = document.getElementById('scoreScreen');
@@ -268,7 +279,7 @@
         const incorrectListEl = document.getElementById('incorrectList');
         const incorrectWordsUlEl = document.getElementById('incorrectWordsUl');
 
-        // --- Oyun Durum Değişkenleri (Sadeleştirildi) ---
+        // --- Oyun Durum Değişkenleri ---
         let selectedLevel = null;
         let currentWordIndex = 0;
         let levelWords = [], currentWord = {}, timerInterval, remainingTime = 0;
@@ -338,15 +349,11 @@
                 selectedLevelBtn = e.target;
                 selectedLevelBtn.classList.add('selected');
                 console.log("Level selected:", selectedLevel);
-                // Seviye seçildiğinde doğrudan oyunu başlat
-                startGame();
+                startGame(); // Seviye seçildiğinde oyunu başlat
             }
         });
 
-        // Mod seçimi kaldırıldı
-
         function startGame() {
-            // Modu hep 'single' olarak ayarla
             const gameMode = 'single';
             console.log(`Starting game - Level: ${selectedLevel}, Mode: ${gameMode}`);
             clearTimeout(autoNextTimeout);
@@ -359,7 +366,6 @@
             basePointsPerWord = Math.floor(100 / numWords);
             pointsRemainder = 100 % numWords;
 
-            // UI'ı Tek Kişiliğe Ayarla
             gameHeader.style.display = 'flex';
             gameMain.style.display = 'flex';
             gameFooter.style.display = 'flex';
@@ -395,7 +401,7 @@
             populateLetterBank(); disableLetterBank(true); updateMistakeDisplay();
 
             playAudioButton.disabled = false; playAudioButton.classList.add('blinking-button');
-            waitingForAudioClick = true; // Sesi beklemeye başla
+            waitingForAudioClick = true;
         }
 
         function populateLetterBank() {
@@ -484,7 +490,13 @@
             incorrectWordsUlEl.innerHTML = '';
             if (incorrectWords.length > 0) {
                 incorrectListEl.style.display = 'block';
-                incorrectWords.forEach(word => { const li = document.createElement('li'); li.innerHTML = `<span>${word.tr}</span><span>${word.ar}</span>`; incorrectWordsUlEl.appendChild(li); });
+                incorrectWords.forEach(word => {
+                    const li = document.createElement('li');
+                    const spanTr = document.createElement('span'); spanTr.textContent = word.tr || '';
+                    const spanAr = document.createElement('span'); spanAr.textContent = word.ar || ''; spanAr.setAttribute('dir', 'rtl'); spanAr.setAttribute('lang', 'ar');
+                    li.appendChild(spanTr); li.appendChild(spanAr);
+                    incorrectWordsUlEl.appendChild(li);
+                });
             } else { incorrectListEl.style.display = 'none'; }
             scoreScreen.classList.add('active'); scoreScreen.style.display = 'flex';
         }
@@ -494,7 +506,6 @@
             gameScreen.classList.remove('active'); gameScreen.style.display = 'none'; scoreScreen.classList.remove('active'); scoreScreen.style.display = 'none';
             homeScreen.classList.add('active'); homeScreen.style.display = 'flex'; history.replaceState({ screen: 'home' }, '', window.location.pathname);
              if (selectedLevelBtn) { selectedLevelBtn.classList.remove('selected'); selectedLevelBtn = null; } selectedLevel = null;
-             // Mod butonları hala gizli kalacak
         }
 
         function highlightExpectedInput(clear = false) { }
@@ -506,15 +517,22 @@
         // *** GÜNCELLENDİ: Ses çalma mantığı düzeltildi ***
         playAudioButton.addEventListener('click', () => {
             if (waitingForAudioClick) { // İlk tıklama, oyunu başlatır
+                console.log("Audio button clicked (waiting state)");
                 waitingForAudioClick = false;
                 wordActive = true;
                 playAudioButton.classList.remove('blinking-button');
-                playAudioButton.disabled = false; // Tekrar basılabilir yap
+                playAudioButton.disabled = false;
                 playAudio(); // Sesi çal
                 startTimer();
                 disableLetterBank(false);
             } else if (wordActive || gameActive) { // Oyun sırasında veya timer çalışırken tekrar çal
+                 console.log("Audio button clicked (active/gameActive state)");
                  playAudio();
+            } else if (!gameActive && currentWord && currentWord.audioSrc) { // Oyun bitmiş ama kelime bilgisi hala varsa
+                 console.log("Audio button clicked (inactive state, but word exists)");
+                 playAudio();
+            } else {
+                 console.log("Audio button clicked (inactive state, no word info)");
             }
         });
 
@@ -542,8 +560,10 @@
         function initializeApp() {
             document.querySelectorAll('.screen').forEach(screen => { screen.classList.remove('active'); screen.style.display = 'none'; });
             homeScreen.classList.add('active'); homeScreen.style.display = 'flex'; history.replaceState({ screen: 'home' }, '', window.location.pathname);
-            // Mod seçimi kaldırıldığı için başlangıç ayarı yok
-            selectedLevel = null;
+             selectedLevel = null;
+             // Mod seçimi kaldırıldı
+             const modeContainer = document.getElementById('modeSelectContainer');
+             if (modeContainer) modeContainer.style.display = 'none'; // Tamamen gizle
         }
         initializeApp();
     </script>
