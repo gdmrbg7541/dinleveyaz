@@ -35,7 +35,8 @@
         body {
             font-family: var(--font-poppins); background: var(--color-bg); color: var(--color-text-primary); margin: 0; padding: 1rem;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            overflow: hidden; /* Dikey kaydırmayı engelle */
+            overflow-x: hidden;
+            /* overflow-y: hidden; */ /* Dikey kaydırma ihtiyacı olabilir diye kaldırıldı */
         }
 
         .screen {
@@ -61,7 +62,7 @@
              min-height: 0;
              width: 100%;
              justify-content: space-between;
-             overflow: hidden;
+             overflow: hidden; /* İç taşmaları engelle */
         }
 
         #homeScreen { text-align: center; justify-content: center;}
@@ -107,12 +108,12 @@
             border-bottom: none; margin-bottom: 0.5rem; flex-shrink: 0; padding-left: 0; padding-right: 0; width: 100%;
              max-width: 45rem; margin-left: auto; margin-right: auto;
         }
-        .header-info { font-size: 1.8rem; font-weight: 600; font-family: var(--font-poppins); background: var(--color-bg); padding: 0.5rem 1rem; border-radius: var(--border-radius-small); box-shadow: 2px 2px 4px var(--color-shadow-dark), -2px -2px 4px var(--color-shadow-light);}
+        .header-info { font-size: 1.5rem; font-weight: 600; font-family: var(--font-poppins); background: var(--color-bg); padding: 0.5rem 1rem; border-radius: var(--border-radius-small); box-shadow: 2px 2px 4px var(--color-shadow-dark), -2px -2px 4px var(--color-shadow-light);}
         #levelScoreDisplay { color: var(--color-score); margin-right: auto; margin-left: 0; }
-        #timerDisplay { color: var(--color-error); margin-left: auto; margin-right: 0; font-size: 2rem;}
-        #mistakeCounter { color: var(--color-error); font-size: 2.2rem; letter-spacing: 2px; margin-left: 0.5rem; margin-right: 0.5rem; background: none; box-shadow: none; padding: 0;}
+        #timerDisplay { color: var(--color-error); margin-left: auto; margin-right: 0; font-size: 1.7rem;} /* Boyut sabit kaldı */
+        #mistakeCounter { color: var(--color-error); font-size: 2rem; letter-spacing: 2px; margin-left: 0.5rem; margin-right: 0.5rem; background: none; box-shadow: none; padding: 0;} /* Boyut sabit kaldı */
 
-        /* --- GÜNCELLEME: Main alanı dikey ortalama ve boşluk --- */
+        /* Main alanı dikey ortalama ve boşluk */
         .game-main {
             text-align: center;
             flex-grow: 1;
@@ -147,10 +148,10 @@
             word-break: break-all;
         }
 
-        /* --- GÜNCELLEME: Türkçe kelime boyutu (Esnek clamp) --- */
+        /* --- GÜNCELLEME 1: Türkçe kelime boyutu (Esnek clamp, küçültüldü) --- */
         #turkishWord {
             order: 3;
-            font-size: clamp(2.5rem, 8vmin, 4rem); /* Daha küçük min/max */
+            font-size: clamp(2rem, 8vmin, 4rem); /* Daha küçük min/tercih edilen/max */
             margin-top: 0;
             margin-bottom: 0;
             font-family: var(--font-poppins);
@@ -160,16 +161,16 @@
 
         #arabicOutputContainer { order: 1; gap: 0.5rem; direction: rtl; background: var(--color-bg); margin-bottom: 0; }
 
-        /* --- GÜNCELLEME: Arapça yazı boyutu (Esnek clamp) --- */
+        /* --- GÜNCELLEME 2: Arapça yazı boyutu (Esnek clamp, küçültüldü) --- */
         #arabicOutputDisplay {
             width: auto; max-width: 100%; white-space: normal;
             font-family: var(--font-harmattan); font-weight: 700; line-height: 1.3; border: none;
             background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default;
-            font-size: clamp(2.5rem, 8vmin, 4rem); /* Türkçe ile aynı clamp */
+            font-size: clamp(2rem, 8vmin, 4rem); /* Türkçe ile aynı küçültülmüş clamp */
             transition: none; color: var(--color-text-primary);
         }
 
-        #arabicOutputDisplay.empty::before { content: '...'; color: var(--color-text-secondary); font-weight: normal; font-size: 2rem; opacity: 0.8; width: 100%; text-align: center;}
+        #arabicOutputDisplay.empty::before { content: '...'; color: var(--color-text-secondary); font-weight: normal; font-size: 1.5rem; opacity: 0.8; width: 100%; text-align: center;}
         #correctAnswerContainer, #correctAnswerDisplay, #helperGrid, .char-btn, .separator, .tool-btn-danger, #checkButton, #nextButton { display: none !important; }
 
         #letterBankContainer {
@@ -178,15 +179,15 @@
             padding: 0;
             margin: 0.5rem 0;
             transition: none;
-            flex-grow: 1; /* Mevcut alanı doldursun */
+            flex-grow: 1; /* Mevcut alanı doldurmaya çalışsın */
             flex-shrink: 1;
             width: 100%;
             box-sizing: border-box;
             max-width: 100%;
             display: flex;
-            align-items: center; /* İçeriği dikeyde ortala */
+            align-items: center;
             justify-content: center;
-            min-height: 100px;
+            min-height: auto; /* Min yükseklik kaldırıldı */
         }
         #letterBank {
             display: flex;
@@ -199,22 +200,20 @@
             max-width: 100%;
             margin: 0 auto;
         }
-        /* .letter-bank-row artık kullanılmıyor */
 
-
-        /* --- GÜNCELLEME: Butonlar (Esnek clamp) --- */
+        /* --- GÜNCELLEME 3: Butonlar (Esnek clamp, küçültüldü) --- */
         .letter-bank-btn {
             font-family: var(--font-harmattan); font-weight: 700;
-            font-size: clamp(2.5rem, 8vmin, 4rem);  /* Metinlerle benzer clamp */
-            width: clamp(3.5rem, 11vmin, 5.5rem);   /* Font boyutuna uygun */
-            height: clamp(3.5rem, 11vmin, 5.5rem);  /* Font boyutuna uygun */
-            padding: 0.3rem 0; /* Dikey padding azaltıldı */
-            margin: clamp(0.1rem, 0.5vmin, 0.2rem);
+            font-size: clamp(2rem, 8vmin, 4rem);  /* Metinlerle benzer küçültülmüş clamp */
+            width: clamp(3rem, 12vmin, 5rem);   /* Font boyutuna uygun küçültülmüş */
+            height: clamp(3rem, 12vmin, 5rem);  /* Font boyutuna uygun küçültülmüş */
+            padding: 0.2rem 0; /* Dikey padding azaltıldı */
+            margin: clamp(0.1rem, 0.4vmin, 0.2rem); /* Boşluk azaltıldı */
             background: var(--color-bg);
             color: var(--color-text-primary);
             border: none;
             box-shadow: 4px 4px 8px var(--color-shadow-dark), -4px -4px 8px var(--color-shadow-light);
-            border-radius: clamp(0.5rem, 2vmin, 1rem);
+            border-radius: clamp(0.5rem, 1.5vmin, 0.8rem); /* Biraz daha az yuvarlak */
             transition: all 0.1s ease-out;
             display: inline-flex; justify-content: center; align-items: center;
             line-height: 1;
@@ -228,10 +227,11 @@
             transform: scale(0.97);
         }
 
-        .letter-bank-btn.hareke-char { font-size: clamp(1.8rem, 6vmin, 3rem); } /* Orantılı */
-        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: clamp(0.3rem, 1.2vmin, 0.6rem); } /* Orantılı */
-        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: clamp(0.3rem, 1.2vmin, 0.6rem); } /* Orantılı */
-        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.3rem; padding-bottom: 0.3rem;} /* Normal padding */
+        /* --- GÜNCELLEME 4: Hareke boyutları ve padding --- */
+        .letter-bank-btn.hareke-char { font-size: clamp(1.5rem, 6vmin, 3rem); } /* Orantılı küçültüldü */
+        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: clamp(0.2rem, 0.8vmin, 0.5rem); } /* Orantılı */
+        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: clamp(0.2rem, 0.8vmin, 0.5rem); } /* Orantılı */
+        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.2rem; padding-bottom: 0.2rem;} /* Normal padding azaltıldı */
         .letter-bank-btn.correct-form { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #5cb58f, inset -2px -2px 4px #8cf9c1 !important; cursor: default; transform: none !important; }
         .letter-bank-btn.error-form { background-color: var(--color-error-light) !important; color: var(--color-error) !important; box-shadow: inset 2px 2px 4px #cc7a7a, inset -2px -2px 4px #ffa0a0 !important; animation: shake 0.3s ease-in-out; transform: none !important; }
         @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
