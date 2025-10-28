@@ -35,8 +35,7 @@
         body {
             font-family: var(--font-poppins); background: var(--color-bg); color: var(--color-text-primary); margin: 0; padding: 1rem;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: hidden; /* Dikey kaydırmayı engelle */
         }
 
         .screen {
@@ -49,13 +48,21 @@
             display: none;
             flex-direction: column; align-items: center;
             justify-content: flex-start;
-            min-height: calc(100vh - 2rem);
-            height: auto;
+            height: calc(100vh - 2rem);
+            max-height: 800px;
         }
         .screen.active {
             display: flex;
         }
 
+        #gameScreen, #scoreScreen {
+             flex-grow: 1;
+             flex-direction: column;
+             min-height: 0;
+             width: 100%;
+             justify-content: space-between;
+             overflow: hidden;
+        }
 
         #homeScreen { text-align: center; justify-content: center;}
         .title-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 2rem; flex-shrink: 0;}
@@ -95,8 +102,6 @@
         .back-button { font-size: 2.5rem; width: 4.5rem; height: 4rem; padding: 0; }
         #scoreToHomeButton { font-size: 1.5rem; width: auto; min-width: 5rem; height: 4rem; padding: 0 1.5rem; margin: 1.5rem auto 0; display: block; }
 
-        #gameScreen { justify-content: space-between; }
-
         #gameHeader {
             position: relative; display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem;
             border-bottom: none; margin-bottom: 0.5rem; flex-shrink: 0; padding-left: 0; padding-right: 0; width: 100%;
@@ -107,15 +112,16 @@
         #timerDisplay { color: var(--color-error); margin-left: auto; margin-right: 0; font-size: 2rem;}
         #mistakeCounter { color: var(--color-error); font-size: 2.2rem; letter-spacing: 2px; margin-left: 0.5rem; margin-right: 0.5rem; background: none; box-shadow: none; padding: 0;}
 
+        /* --- GÜNCELLEME: Main alanı dikey ortalama ve boşluk --- */
         .game-main {
             text-align: center;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Dikeyde ortala */
             min-height: 0;
-            gap: 1rem;
+            gap: 0.5rem; /* Boşluk azaltıldı */
             padding: 0;
             width: 100%;
             overflow: hidden;
@@ -124,7 +130,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem; /* Boşluk azaltıldı */
             width: 100%;
             max-width: 40rem;
             margin: auto;
@@ -141,9 +147,10 @@
             word-break: break-all;
         }
 
+        /* --- GÜNCELLEME: Türkçe kelime boyutu (Esnek clamp) --- */
         #turkishWord {
             order: 3;
-            font-size: 6rem;
+            font-size: clamp(2.5rem, 8vmin, 4rem); /* Daha küçük min/max */
             margin-top: 0;
             margin-bottom: 0;
             font-family: var(--font-poppins);
@@ -153,11 +160,12 @@
 
         #arabicOutputContainer { order: 1; gap: 0.5rem; direction: rtl; background: var(--color-bg); margin-bottom: 0; }
 
+        /* --- GÜNCELLEME: Arapça yazı boyutu (Esnek clamp) --- */
         #arabicOutputDisplay {
             width: auto; max-width: 100%; white-space: normal;
             font-family: var(--font-harmattan); font-weight: 700; line-height: 1.3; border: none;
             background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default;
-            font-size: 6rem;
+            font-size: clamp(2.5rem, 8vmin, 4rem); /* Türkçe ile aynı clamp */
             transition: none; color: var(--color-text-primary);
         }
 
@@ -170,58 +178,60 @@
             padding: 0;
             margin: 0.5rem 0;
             transition: none;
-            flex-grow: 0;
-            flex-shrink: 0;
-            width: auto;
+            flex-grow: 1; /* Mevcut alanı doldursun */
+            flex-shrink: 1;
+            width: 100%;
+            box-sizing: border-box;
             max-width: 100%;
             display: flex;
-            align-items: center;
+            align-items: center; /* İçeriği dikeyde ortala */
             justify-content: center;
-            min-height: auto;
+            min-height: 100px;
         }
         #letterBank {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: clamp(0.2rem, 1vmin, 0.4rem);
             align-items: center;
             justify-content: center;
             padding: 0;
             max-width: 100%;
             margin: 0 auto;
         }
+        /* .letter-bank-row artık kullanılmıyor */
 
+
+        /* --- GÜNCELLEME: Butonlar (Esnek clamp) --- */
         .letter-bank-btn {
             font-family: var(--font-harmattan); font-weight: 700;
-            font-size: 6rem;
-            width: 7.5rem;
-            height: 7.5rem;
-             /* --- GÜNCELLEME: Dikey padding eklendi --- */
-            padding: 0.5rem 0; /* Üst ve alt boşluk */
-            margin: 0.3rem;
+            font-size: clamp(2.5rem, 8vmin, 4rem);  /* Metinlerle benzer clamp */
+            width: clamp(3.5rem, 11vmin, 5.5rem);   /* Font boyutuna uygun */
+            height: clamp(3.5rem, 11vmin, 5.5rem);  /* Font boyutuna uygun */
+            padding: 0.3rem 0; /* Dikey padding azaltıldı */
+            margin: clamp(0.1rem, 0.5vmin, 0.2rem);
             background: var(--color-bg);
             color: var(--color-text-primary);
             border: none;
             box-shadow: 4px 4px 8px var(--color-shadow-dark), -4px -4px 8px var(--color-shadow-light);
-            border-radius: var(--border-radius-main);
+            border-radius: clamp(0.5rem, 2vmin, 1rem);
             transition: all 0.1s ease-out;
             display: inline-flex; justify-content: center; align-items: center;
-            line-height: 1; /* Dikey ortalama için önemli */
+            line-height: 1;
             vertical-align: middle; user-select: none;
             -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; cursor: pointer;
             flex-shrink: 0;
-            box-sizing: border-box; /* Padding'i boyuta dahil et */
+            box-sizing: border-box;
         }
         .letter-bank-btn:active:not(:disabled) {
             box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light);
             transform: scale(0.97);
         }
 
-        .letter-bank-btn.hareke-char { font-size: 4.5rem; }
-        /* --- GÜNCELLEME: Hareke padding artırıldı --- */
-        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: 0.8rem; } /* Artırıldı */
-        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: 0.8rem; } /* Artırıldı */
-        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.5rem; padding-bottom: 0.5rem;} /* Normal harflere de padding */
+        .letter-bank-btn.hareke-char { font-size: clamp(1.8rem, 6vmin, 3rem); } /* Orantılı */
+        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: clamp(0.3rem, 1.2vmin, 0.6rem); } /* Orantılı */
+        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: clamp(0.3rem, 1.2vmin, 0.6rem); } /* Orantılı */
+        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.3rem; padding-bottom: 0.3rem;} /* Normal padding */
         .letter-bank-btn.correct-form { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #5cb58f, inset -2px -2px 4px #8cf9c1 !important; cursor: default; transform: none !important; }
         .letter-bank-btn.error-form { background-color: var(--color-error-light) !important; color: var(--color-error) !important; box-shadow: inset 2px 2px 4px #cc7a7a, inset -2px -2px 4px #ffa0a0 !important; animation: shake 0.3s ease-in-out; transform: none !important; }
         @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
@@ -310,7 +320,7 @@
         </header>
 
         <main id="gameMain" class="game-main">
-            <div id="gameContent"> {/* Yeni merkezi div */}
+            <div id="gameContent">
                 <div id="arabicOutputContainer">
                     <div id="arabicOutputDisplay" class="arabic-output empty" dir="rtl" lang="ar"></div>
                 </div>
@@ -518,7 +528,6 @@
             turkishWordEl.textContent = currentWord.tr;
             selection = []; expectedFullCharIndex = 0; mistakesMade = 0;
             arabicOutputEl.textContent = ''; arabicOutputEl.classList.add('empty');
-            // Gölge sıfırlama (checkAnswer içinden buraya taşındı)
             arabicOutputContainer.style.boxShadow = 'inset 3px 3px 6px var(--color-shadow-dark), inset -3px -3px 6px var(--color-shadow-light)';
             populateLetterBank(); disableLetterBank(true); updateMistakeDisplay();
 
@@ -545,7 +554,6 @@
                 return btn;
             });
 
-            // Direkt #letterBank'e ekle
             buttonElements.forEach(btn => letterBank.appendChild(btn));
         }
 
@@ -582,13 +590,13 @@
              if (isCorrect) {
                  let pointsAwarded = basePointsPerWord; if (currentWordIndex < pointsRemainder) { pointsAwarded++; }
                  currentLevelScore += pointsAwarded; levelScoreDisplay.textContent = `Puan: ${currentLevelScore}`; triggerPointsBurst(pointsAwarded);
-                 arabicOutputContainer.style.boxShadow = 'inset 3px 3px 6px #5cb58f, inset -3px -3px 6px #8cf9c1'; // Yeşil iç gölge
+                 arabicOutputContainer.style.boxShadow = 'inset 3px 3px 6px #5cb58f, inset -3px -3px 6px #8cf9c1';
              } else {
-                 arabicOutputContainer.style.boxShadow = 'inset 3px 3px 6px #cc7a7a, inset -3px -3px 6px #ffa0a0'; // Kırmızı iç gölge
+                 arabicOutputContainer.style.boxShadow = 'inset 3px 3px 6px #cc7a7a, inset -3px -3px 6px #ffa0a0';
                  if (!incorrectWords.some(word => word.ar === currentWord.ar)) { incorrectWords.push({ ar: currentWord.ar, tr: currentWord.tr }); }
              }
              const delay = 1500; console.log(`SP: Otomatik geçiş ${delay}ms sonra...`);
-             autoNextTimeout = setTimeout(nextWord, delay); // Gölge sıfırlama loadWord içine taşındı
+             autoNextTimeout = setTimeout(nextWord, delay);
         }
 
 
