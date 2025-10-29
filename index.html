@@ -105,7 +105,6 @@
         #turkishWord { order: 3; font-size: 4rem; margin-top: 0; margin-bottom: 0; font-family: var(--font-poppins); font-weight: 600; color: var(--color-text-primary); }
         #arabicOutputContainer { order: 1; gap: 0.5rem; direction: rtl; background: var(--color-surface); margin-bottom: 0; }
         
-        /* GÜNCELLENDİ: Arapça font boyutu yatayda 6rem'e büyütüldü */
         #arabicOutputDisplay { width: auto; max-width: 100%; white-space: normal; font-family: var(--font-harmattan); font-weight: 700; line-height: 1.3; border: none; background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default; font-size: 6rem; transition: none; color: var(--color-text-primary); }
         
         #arabicOutputDisplay[lang="ar"] { font-family: var(--font-harmattan); /* Ekstra güvence */ }
@@ -114,10 +113,15 @@
 
         #letterBankContainer { order: 2; overflow-y: auto; padding: 0.2rem; margin: 0; width: 100%; box-sizing: border-box; max-width: 100%; display: flex; align-items: center; justify-content: center; min-height: auto; flex-shrink: 0; }
         #letterBank { display: flex; flex-direction: row; flex-wrap: wrap; gap: 0.4rem; align-items: center; justify-content: center; padding: 0; max-width: 100%; margin: 0 auto; }
-        .letter-bank-btn { font-family: var(--font-harmattan); /* Arapça fontu uygula */ font-weight: 700; font-size: 4rem; width: 5rem; height: 5rem; padding: 0.3rem 0; margin: 0.2rem; background: var(--color-surface); color: var(--color-text-primary); border: none; box-shadow: 4px 4px 8px var(--color-shadow-dark), -4px -4px 8px var(--color-shadow-light); border-radius: 0.8rem; transition: all 0.1s ease-out; line-height: 1; vertical-align: middle; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; cursor: pointer; flex-shrink: 0; box-sizing: border-box; }
+        
+        /* GÜNCELLENDİ: Buton boyutu yatayda 7rem'e büyütüldü */
+        .letter-bank-btn { font-family: var(--font-harmattan); font-weight: 700; font-size: 5rem; width: 7rem; height: 7rem; padding: 0.3rem 0; margin: 0.2rem; background: var(--color-surface); color: var(--color-text-primary); border: none; box-shadow: 4px 4px 8px var(--color-shadow-dark), -4px -4px 8px var(--color-shadow-light); border-radius: 0.8rem; transition: all 0.1s ease-out; line-height: 1; vertical-align: middle; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; cursor: pointer; flex-shrink: 0; box-sizing: border-box; }
+        
         .letter-bank-btn[lang="ar"] { font-family: var(--font-harmattan); /* Ekstra güvence */ }
         .letter-bank-btn:active:not(:disabled) { box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light); transform: scale(0.97); }
-        .letter-bank-btn.hareke-char { font-size: 3rem; }
+        
+        .letter-bank-btn.hareke-char { font-size: 4rem; }
+        
         .letter-bank-btn.correct-form { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #76b198, inset -2px -2px 4px #baffa0 !important; cursor: default; transform: none !important; }
         .letter-bank-btn.error-form { background-color: var(--color-error-light) !important; color: var(--color-error) !important; box-shadow: inset 2px 2px 4px #d35f61, inset -2px -2px 4px #ff8386 !important; animation: shake 0.3s ease-in-out; transform: none !important; }
         @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
@@ -158,12 +162,13 @@
         #incorrectList li span:last-child[lang="ar"] { font-family: var(--font-harmattan); /* Ekstra güvence */ }
 
 
-        /* --- GÜNCELLENDİ: Dinamik Harf Satırı Genişlikleri (Yatay/Varsayılan) --- */
-        #letterBankContainer.rows-2 #letterBank { max-width: 22rem; } /* 4/satır (5-8 harf) */
-        #letterBankContainer.rows-3 #letterBank { max-width: 28rem; } /* 5/satır (9-10, 12-14 harf) */
-        #letterBankContainer.rows-4 #letterBank { max-width: 28rem; } /* 5/satır (16+ harf) */
-        #letterBankContainer.rows-5 #letterBank { max-width: 16rem; } /* 3/satır (15 harf) */
-        #letterBankContainer.rows-11 #letterBank { max-width: 22rem; } /* 4/satır (11 harf -> 4-4-3) */
+        /* --- GÜNCELLENDİ: Dinamik Harf Satırı Genişlikleri (Yatay/Varsayılan - Yeni 7rem Buton Boyutuna Göre) --- */
+        /* Yatay Buton: 7rem + 0.4rem gap = ~7.4rem */
+        #letterBankContainer.rows-2 #letterBank { max-width: 30rem; } /* 4/satır (5-8 harf) */
+        #letterBankContainer.rows-3 #letterBank { max-width: 38rem; } /* 5/satır (9-10, 12-14 harf) */
+        #letterBankContainer.rows-4 #letterBank { max-width: 38rem; } /* 5/satır (16+ harf) */
+        #letterBankContainer.rows-5 #letterBank { max-width: 23rem; } /* 3/satır (15 harf) */
+        #letterBankContainer.rows-11 #letterBank { max-width: 30rem; } /* 4/satır (11 harf -> 4-4-3) */
         /* --- --- */
 
         /* --- DİKEY EKRAN (Telefon/Tablet) 540x960 ORANI --- */
@@ -178,7 +183,6 @@
             #gameHeader { max-width: 100%; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
             .header-info { font-size: 1.2rem; } #timerDisplay { font-size: 1.4rem; } #mistakeCounter { font-size: 1.5rem; }
             
-            /* GÜNCELLENDİ: Dikeyde boşluk ve font boyutu arttı */
             #gameContent { 
                 max-width: 100%; 
                 gap: 1rem; /* Minimum boşluk */
@@ -186,12 +190,16 @@
                 justify-content: space-evenly; /* Öğeleri dikeyde eşit dağıt */
             }
             #turkishWord { font-size: 3rem; }
-            #arabicOutputDisplay { font-size: 5rem; } /* Arapça font boyutu dikeyde 5rem'e büyütüldü */
+            #arabicOutputDisplay { font-size: 5rem; } 
 
             #letterBankContainer { margin: 0; padding: 0.1rem; }
             #letterBank { gap: 0.2rem; max-width: 100%; }
-            .letter-bank-btn { font-size: 2.5rem; width: 3.5rem; height: 3.5rem; margin: 0.1rem; border-radius: 0.5rem; padding: 0.2rem 0; }
-            .letter-bank-btn.hareke-char { font-size: 2.2rem; }
+            
+            /* GÜNCELLENDİ: Buton boyutu dikeyde 4.5rem'e büyütüldü */
+            .letter-bank-btn { font-size: 3.5rem; width: 4.5rem; height: 4.5rem; margin: 0.1rem; border-radius: 0.5rem; padding: 0.2rem 0; }
+            
+            /* GÜNCELLENDİ: Hareke font boyutu dikeyde 3rem'e büyütüldü */
+            .letter-bank-btn.hareke-char { font-size: 3rem; }
             
             .back-button { width: 3.5rem; height: 3.2rem; font-size: 1.2rem; }
             .back-button::before{ width: 0.7em; height: 0.7em; border-width: 0.25em; }
@@ -201,15 +209,14 @@
             #incorrectList { max-width: 100%; }
             #incorrectList li { font-size: 1rem; } #incorrectList li span:last-child { font-size: 1.3rem; }
 
-            /* --- GÜNCELLENDİ: Dikey için dinamik satır genişlikleri (Yeni 3.5rem buton boyutuna göre) --- */
-            /* Dikey buton boyutu: 3.5rem + 0.2rem gap = ~3.7rem */
-            #letterBankContainer.rows-2 #letterBank { max-width: 15rem; } /* 4/satır (5-8 harf) */
-            #letterBankContainer.rows-3 #letterBank { max-width: 19rem; } /* 5/satır (9-10, 12-14 harf) */
-            #letterBankContainer.rows-4 #letterBank { max-width: 19rem; } /* 5/satır (16+ harf) */
-            #letterBankContainer.rows-5 #letterBank { max-width: 12rem; } /* 3/satır (15 harf) */
-            #letterBankContainer.rows-11 #letterBank { max-width: 15rem; } /* 4/satır (11 harf -> 4-4-3) */
+            /* --- GÜNCELLENDİ: Dikey için dinamik satır genişlikleri (Yeni 4.5rem Buton Boyutuna Göre) --- */
+            /* Dikey Buton: 4.5rem + 0.2rem gap = ~4.7rem */
+            #letterBankContainer.rows-2 #letterBank { max-width: 19rem; } /* 4/satır (5-8 harf) */
+            #letterBankContainer.rows-3 #letterBank { max-width: 24rem; } /* 5/satır (9-10, 12-14 harf) */
+            #letterBankContainer.rows-4 #letterBank { max-width: 24rem; } /* 5/satır (16+ harf) */
+            #letterBankContainer.rows-5 #letterBank { max-width: 15rem; } /* 3/satır (15 harf) */
+            #letterBankContainer.rows-11 #letterBank { max-width: 19rem; } /* 4/satır (11 harf -> 4-4-3) */
             
-            /* GÜNCELLENDİ: Ana Ekranı Dikeyde Yay */
             #homeScreen {
                 justify-content: space-evenly;
             }
