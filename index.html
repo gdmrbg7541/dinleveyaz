@@ -27,13 +27,13 @@
             --color-correct-light: #e1f2ec;
             --color-error-light: #fbe9e9;
             --color-score: #f5a65b;
-            --border-radius-main: 1rem; /* Biraz küçültüldü */
-            --border-radius-small: 0.6rem; /* Biraz küçültüldü */
+            --border-radius-main: 1rem;
+            --border-radius-small: 0.6rem;
         }
 
         html { font-size: 16px; }
         body {
-            font-family: var(--font-poppins); background: var(--color-bg); color: var(--color-text-primary); margin: 0; padding: 0.5rem; /* Padding azaltıldı */
+            font-family: var(--font-poppins); background: var(--color-bg); color: var(--color-text-primary); margin: 0; padding: 0.5rem;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
             overflow: hidden;
         }
@@ -44,11 +44,11 @@
             border-radius: 0;
             box-shadow: none;
             border: none;
-            padding: 0.5rem; /* Padding azaltıldı */ box-sizing: border-box;
+            padding: 0.5rem; box-sizing: border-box;
             display: none;
             flex-direction: column; align-items: center;
             justify-content: flex-start;
-            height: calc(100vh - 1rem); /* Yüksekliği ayarlama */
+            height: calc(100vh - 1rem);
             max-height: 800px;
         }
         .screen.active {
@@ -65,11 +65,12 @@
         }
 
         #homeScreen { text-align: center; justify-content: center;}
-        .title-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; flex-shrink: 0;}
+        .title-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 2rem; flex-shrink: 0;}
         .title-text h1 { font-size: clamp(2.5rem, 8vw, 4rem); color: var(--color-accent-1); margin: 0; font-family: var(--font-poppins); text-shadow: 1px 1px 2px var(--color-shadow-dark); }
         .title-text h2 { font-size: clamp(2rem, 7vw, 3rem); font-weight: 700; color: var(--color-text-primary); margin: 0; text-shadow: 1px 1px 1px var(--color-shadow-light); font-family: var(--font-harmattan); }
         #homeScreen h3 { font-size: 1.8rem; font-family: var(--font-poppins); color: var(--color-text-secondary); padding-bottom: 0.4rem; margin-top: 1rem; font-weight: 600; border-bottom: 2px solid var(--color-accent-1); margin-bottom: 1rem; flex-shrink: 0; width: auto; display: inline-block;}
-        #levelSelect { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.8rem; width: 100%; max-width: 45rem; margin: 0 auto 1rem; flex-shrink: 0;}
+        /* --- GÜNCELLEME: Ana sayfa seviye seçimi 2 sütun --- */
+        #levelSelect { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; width: 100%; max-width: 45rem; margin: 0 auto 1rem; flex-shrink: 0;}
 
         .key-button {
             padding: 0.6rem 0.8rem; font-size: 0.9rem; font-weight: 600; font-family: inherit;
@@ -78,28 +79,27 @@
             transition: all 0.2s ease-out;
             color: var(--color-text-primary);
             background: var(--color-bg);
-            box-shadow: 3px 3px 6px var(--color-shadow-dark), -3px -3px 6px var(--color-shadow-light); /* Gölge küçültüldü */
+            box-shadow: 3px 3px 6px var(--color-shadow-dark), -3px -3px 6px var(--color-shadow-light);
             display: inline-flex; justify-content: center; align-items: center;
             line-height: 1.2; vertical-align: middle; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
         }
         .key-button:active:not(:disabled) {
-            box-shadow: inset 1.5px 1.5px 3px var(--color-shadow-dark), inset -1.5px -1.5px 3px var(--color-shadow-light); /* Gölge küçültüldü */
+            box-shadow: inset 1.5px 1.5px 3px var(--color-shadow-dark), inset -1.5px -1.5px 3px var(--color-shadow-light);
             transform: scale(0.98);
         }
         .key-button:hover:not(:disabled) {
              color: var(--color-accent-1);
         }
 
-        .level-btn { font-size: 1.5rem; padding: 1rem 1.2rem; font-weight: 700;} /* Boyut ve padding ayarlandı */
+        .level-btn { font-size: 1.5rem; padding: 1rem 1.2rem; font-weight: 700;}
         .level-btn.selected {
              background: var(--color-selected-bg);
              color: var(--color-selected-text);
-             box-shadow: inset 2px 2px 4px #d15a1a, inset -2px -2px 4px #ff8a3e; /* Gölge küçültüldü */
+             box-shadow: inset 2px 2px 4px #d15a1a, inset -2px -2px 4px #ff8a3e;
              transform: none;
         }
 
         .action-btn { font-size: 1.2rem; border-radius: var(--border-radius-small); padding: 0.7rem 1.2rem; }
-        /* Footer butonları küçültüldü */
         .back-button { font-size: 2rem; width: 4rem; height: 3.5rem; padding: 0; }
         #scoreToHomeButton { font-size: 1.3rem; width: auto; min-width: 4rem; height: 3.5rem; padding: 0 1.2rem; margin: 1.5rem auto 0; display: block; color: var(--color-text-secondary);}
 
@@ -108,11 +108,10 @@
             border-bottom: none; margin-bottom: 0.4rem; flex-shrink: 0; padding-left: 0; padding-right: 0; width: 100%;
              max-width: 45rem; margin-left: auto; margin-right: auto;
         }
-        /* Header info küçültüldü */
         .header-info { font-size: 1.2rem; font-weight: 600; font-family: var(--font-poppins); background: var(--color-bg); padding: 0.4rem 0.8rem; border-radius: var(--border-radius-small); box-shadow: 2px 2px 4px var(--color-shadow-dark), -2px -2px 4px var(--color-shadow-light);}
         #levelScoreDisplay { color: var(--color-score); font-weight: 700; }
-        #timerDisplay { color: var(--color-error); font-weight: 700; font-size: 1.4rem;} /* Küçültüldü */
-        #mistakeCounter { color: var(--color-error); font-size: 1.6rem; letter-spacing: 1px; margin-left: 0.4rem; margin-right: 0.4rem; background: none; box-shadow: none; padding: 0;} /* Küçültüldü */
+        #timerDisplay { color: var(--color-error); font-weight: 700; font-size: 1.4rem;}
+        #mistakeCounter { color: var(--color-error); font-size: 1.6rem; letter-spacing: 1px; margin-left: 0.4rem; margin-right: 0.4rem; background: none; box-shadow: none; padding: 0;}
 
         .game-main {
             text-align: center;
@@ -122,7 +121,7 @@
             align-items: center;
             justify-content: center;
             min-height: 0;
-            gap: 0.4rem; /* Boşluk azaltıldı */
+            gap: 0.4rem;
             padding: 0;
             width: 100%;
             overflow: hidden;
@@ -131,27 +130,31 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.4rem; /* Boşluk azaltıldı */
+            gap: 0.4rem;
             width: 100%;
             max-width: 40rem;
             margin: auto;
+            flex-grow: 1; /* Ana içerik büyüsün */
+            min-height: 0; /* Büyümesi için */
+             justify-content: center;
         }
+
 
         #turkishWord, #arabicOutputContainer {
             padding: 0.4rem 0.8rem; min-height: auto; display: flex; align-items: center; position: relative;
             background: var(--color-bg);
             border: none;
             border-radius: var(--border-radius-main);
-            box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light); /* Gölge küçültüldü */
-            width: 100%; text-align: center; justify-content: center; flex-basis: auto; box-sizing: border-box; flex-shrink: 0; line-height: 1.2; /* Daha sıkı */
+            box-shadow: inset 2px 2px 4px var(--color-shadow-dark), inset -2px -2px 4px var(--color-shadow-light);
+            width: 100%; text-align: center; justify-content: center; flex-basis: auto; box-sizing: border-box; flex-shrink: 0; line-height: 1.2;
             overflow: hidden;
             word-break: break-all;
         }
 
-        /* --- GÜNCELLEME: Türkçe kelime boyutu (Esnek clamp, KÜÇÜLTÜLDÜ) --- */
+        /* Türkçe kelime boyutu (Esnek clamp, küçültüldü) */
         #turkishWord {
             order: 3;
-            font-size: clamp(1.8rem, 7vmin, 3.5rem); /* Daha küçük değerler */
+            font-size: clamp(1.6rem, 6vmin, 3rem);
             margin-top: 0;
             margin-bottom: 0;
             font-family: var(--font-poppins);
@@ -161,23 +164,25 @@
 
         #arabicOutputContainer { order: 1; gap: 0.4rem; direction: rtl; background: var(--color-bg); margin-bottom: 0; }
 
-        /* --- GÜNCELLEME: Arapça yazı boyutu (Esnek clamp, KÜÇÜLTÜLDÜ) --- */
+        /* Arapça yazı boyutu (Esnek clamp, küçültüldü) */
         #arabicOutputDisplay {
             width: auto; max-width: 100%; white-space: normal;
             font-family: var(--font-harmattan); font-weight: 700; line-height: 1.2; border: none;
             background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default;
-            font-size: clamp(1.8rem, 7vmin, 3.5rem); /* Türkçe ile aynı küçültülmüş clamp */
+            font-size: clamp(1.6rem, 6vmin, 3rem); /* Türkçe ile aynı clamp */
             transition: none; color: var(--color-text-primary);
         }
 
         #arabicOutputDisplay.empty::before { content: '...'; color: var(--color-text-secondary); font-weight: normal; font-size: 1.5rem; opacity: 0.8; width: 100%; text-align: center;}
         #correctAnswerContainer, #correctAnswerDisplay, #helperGrid, .char-btn, .separator, .tool-btn-danger, #checkButton, #nextButton { display: none !important; }
 
+        /* Harf bankası konteyneri kaydırılabilir */
         #letterBankContainer {
             order: 2;
-            overflow: hidden;
-            padding: 0;
-            margin: 0.3rem 0; /* Boşluk azaltıldı */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0.3rem 0;
+            margin: 0.3rem 0;
             transition: none;
             flex-grow: 1;
             flex-shrink: 1;
@@ -185,35 +190,45 @@
             box-sizing: border-box;
             max-width: 100%;
             display: flex;
-            align-items: center;
+            align-items: center; /* Satırları ortala */
             justify-content: center;
             min-height: auto;
+            border-radius: var(--border-radius-small);
         }
+        /* --- GÜNCELLEME: Harf bankası dikey yönde (Tüm cihazlar) --- */
         #letterBank {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: clamp(0.15rem, 0.8vmin, 0.3rem); /* Boşluk azaltıldı */
+            flex-direction: column; /* Dikey */
+            gap: 0.3rem;
             align-items: center;
-            justify-content: center;
             padding: 0;
             max-width: 100%;
             margin: 0 auto;
         }
+        /* --- GÜNCELLEME: Row class'ı butonları yatayda dizer (Tüm cihazlar) --- */
+        .letter-bank-row {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.3rem;
+            width: auto; /* İçeriğe göre genişlik */
+            max-width: 100%;
+        }
 
-        /* --- GÜNCELLEME: Butonlar (Esnek clamp, KÜÇÜLTÜLDÜ) --- */
+        /* Butonlar (Esnek clamp, küçültüldü) */
         .letter-bank-btn {
             font-family: var(--font-harmattan); font-weight: 700;
-            font-size: clamp(1.8rem, 7vmin, 3.5rem);  /* Metinlerle benzer küçültülmüş clamp */
-            width: clamp(2.8rem, 10vmin, 4.5rem);   /* Font boyutuna uygun küçültülmüş */
-            height: clamp(2.8rem, 10vmin, 4.5rem);  /* Font boyutuna uygun küçültülmüş */
-            padding: 0.1rem 0; /* Dikey padding çok az */
-            margin: clamp(0.1rem, 0.3vmin, 0.15rem); /* Boşluk azaltıldı */
+            font-size: clamp(1.6rem, 6vmin, 3rem);
+            width: clamp(2.5rem, 9vmin, 4rem);
+            height: clamp(2.5rem, 9vmin, 4rem);
+            padding: 0.1rem 0;
+            margin: clamp(0.1rem, 0.3vmin, 0.15rem);
             background: var(--color-bg);
             color: var(--color-text-primary);
             border: none;
-            box-shadow: 3px 3px 6px var(--color-shadow-dark), -3px -3px 6px var(--color-shadow-light); /* Gölge küçültüldü */
-            border-radius: clamp(0.4rem, 1.2vmin, 0.7rem); /* Daha az yuvarlak */
+            box-shadow: 3px 3px 6px var(--color-shadow-dark), -3px -3px 6px var(--color-shadow-light);
+            border-radius: clamp(0.4rem, 1.2vmin, 0.7rem);
             transition: all 0.1s ease-out;
             display: inline-flex; justify-content: center; align-items: center;
             line-height: 1;
@@ -223,15 +238,15 @@
             box-sizing: border-box;
         }
         .letter-bank-btn:active:not(:disabled) {
-            box-shadow: inset 1.5px 1.5px 3px var(--color-shadow-dark), inset -1.5px -1.5px 3px var(--color-shadow-light); /* Gölge küçültüldü */
+            box-shadow: inset 1.5px 1.5px 3px var(--color-shadow-dark), inset -1.5px -1.5px 3px var(--color-shadow-light);
             transform: scale(0.97);
         }
 
-        /* --- GÜNCELLEME: Hareke boyutları ve padding --- */
-        .letter-bank-btn.hareke-char { font-size: clamp(1.4rem, 5.5vmin, 2.8rem); } /* Orantılı küçültüldü */
-        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: clamp(0.15rem, 0.6vmin, 0.4rem); } /* Orantılı */
-        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: clamp(0.15rem, 0.6vmin, 0.4rem); } /* Orantılı */
-        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.1rem; padding-bottom: 0.1rem;} /* Normal padding azaltıldı */
+        /* Hareke boyutları ve padding */
+        .letter-bank-btn.hareke-char { font-size: clamp(1.2rem, 4.5vmin, 2.4rem); }
+        .letter-bank-btn.hareke-fatha { align-items: flex-start; padding-top: clamp(0.15rem, 0.6vmin, 0.4rem); }
+        .letter-bank-btn.hareke-kasra { align-items: flex-end; padding-bottom: clamp(0.15rem, 0.6vmin, 0.4rem); }
+        .letter-bank-btn.hareke-normal, .letter-bank-btn.char-only { align-items: center; padding-top: 0.1rem; padding-bottom: 0.1rem;}
         .letter-bank-btn.correct-form { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #76b198, inset -2px -2px 4px #baffa0 !important; cursor: default; transform: none !important; }
         .letter-bank-btn.error-form { background-color: var(--color-error-light) !important; color: var(--color-error) !important; box-shadow: inset 2px 2px 4px #d35f61, inset -2px -2px 4px #ff8386 !important; animation: shake 0.3s ease-in-out; transform: none !important; }
         @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
@@ -265,12 +280,12 @@
         .letter-bank-btn.correct-form:disabled { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #76b198, inset -2px -2px 4px #baffa0 !important; opacity: 0.8 !important; }
 
 
-        #gameFooter { text-align: center; flex-shrink: 0; padding-top: 0.5rem; margin-top: 0.4rem; /* Boşluk azaltıldı */ border-top: none; display: flex; justify-content: space-between; align-items: center; width: 100%; padding-left: 0; padding-right: 0;
+        #gameFooter { text-align: center; flex-shrink: 0; padding-top: 0.5rem; margin-top: 0.4rem; border-top: none; display: flex; justify-content: space-between; align-items: center; width: 100%; padding-left: 0; padding-right: 0;
             max-width: 45rem; margin-left: auto; margin-right: auto;
         }
 
 
-        #pointsBurst { position: absolute; top: 0.5rem; left: 4.5rem; /* Konum ayarı */ font-size: 1rem; font-weight: bold; color: var(--color-score); opacity: 0; pointer-events: none; white-space: nowrap; background: var(--color-bg); padding: 0.3rem 0.6rem; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        #pointsBurst { position: absolute; top: 0.5rem; left: 4.5rem; font-size: 1rem; font-weight: bold; color: var(--color-score); opacity: 0; pointer-events: none; white-space: nowrap; background: var(--color-bg); padding: 0.3rem 0.6rem; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
         #pointsBurst.active { animation: points-burst 0.8s ease-out forwards; }
         @keyframes points-burst { 0% { transform: translateY(0) scale(0.8); opacity: 1; } 50% { transform: translateY(-15px) scale(1.1); opacity: 0.9; } 100% { transform: translateY(-30px) scale(0.9); opacity: 0; } }
 
@@ -541,6 +556,7 @@
             const allChars = Array.from(originalWord);
             const buttonsData = allChars.map((char, index) => ({ char: char, id: `${char}-${index}` }));
             buttonsData.sort(() => Math.random() - 0.5);
+            const totalCount = buttonsData.length;
 
             const buttonElements = buttonsData.map(data => {
                 const btn = document.createElement('button'); btn.className = 'letter-bank-btn';
@@ -555,7 +571,49 @@
                 return btn;
             });
 
-            buttonElements.forEach(btn => letterBank.appendChild(btn));
+            // Satır mantığı (4-8 -> 2 satır, 9-12 -> 3 satır, 13-20 -> 4 satır)
+            let numRows = 1;
+            if (totalCount >= 4 && totalCount <= 8) {
+                numRows = 2;
+            } else if (totalCount >= 9 && totalCount <= 12) {
+                numRows = 3;
+            } else if (totalCount >= 13) { // 13 ve üstü 4 satır (veya daha fazla gerekirse)
+                 // 4 satıra bölmek için her satıra düşen eleman sayısı
+                const itemsPerRow = Math.ceil(totalCount / 4);
+                // Eğer 4 satır yapmak elemanları çok sıkıştıracaksa 3'e düşür
+                if (itemsPerRow <= 2 && totalCount > 12) {
+                     numRows = 3;
+                } else {
+                     numRows = 4;
+                }
+            }
+
+
+            if (numRows > 1) {
+                const rows = [];
+                // Gerekli sayıda satır div'i oluştur
+                for (let i = 0; i < numRows; i++) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'letter-bank-row';
+                    rows.push(rowDiv);
+                    letterBank.appendChild(rowDiv);
+                }
+                // Butonları satırlara dağıt (sırayla doldur)
+                const itemsPerRowCount = Math.ceil(totalCount / numRows);
+                buttonElements.forEach((btn, index) => {
+                    const rowIndex = Math.floor(index / itemsPerRowCount);
+                    if (rows[rowIndex]) { // Güvenlik kontrolü
+                         rows[rowIndex].appendChild(btn);
+                    } else { // Beklenmedik durum
+                         letterBank.appendChild(btn); // Direkt ekle
+                    }
+                });
+            } else { // Tek satır durumu
+                 const rowDiv = document.createElement('div');
+                 rowDiv.className = 'letter-bank-row';
+                 buttonElements.forEach(btn => rowDiv.appendChild(btn));
+                 letterBank.appendChild(rowDiv);
+            }
         }
 
 
