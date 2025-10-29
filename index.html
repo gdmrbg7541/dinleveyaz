@@ -32,11 +32,6 @@
         }
 
         html { 
-            /* YATAY (1920x1080) ORANI - GÜNCELLENDİ (dvh kullanımı)
-              1rem'i 16px (1920x1080 çözünürlükte) olarak ayarlar.
-              120 = 1920 / 16
-              67.5 = 1080 / 16
-            */
             font-size: min(calc(100vw / 120), calc(100dvh / 67.5));
             overflow: hidden; 
         }
@@ -44,18 +39,12 @@
         body {
             font-family: var(--font-poppins); background: var(--color-bg); color: var(--color-text-primary); margin: 0; padding: 0;
             display: flex; justify-content: center; align-items: center; 
-            
-            /* --- GÜNCELLENDİ: Dikey ortalama için 'dvh' kullanılıyor --- */
-            height: 100vh; /* Fallback (Eski tarayıcılar için) */
-            height: 100dvh; /* Dinamik viewport yüksekliği (Mobil ortalama için) */
-            /* --- --- */
-            
+            height: 100vh; /* Fallback */
+            height: 100dvh; /* Dikey ortalama için */
             overflow: hidden;
         }
 
-        /* Tüm oyunu saran ana sarmalayıcı */
         #gameWrapper {
-            /* VARSAYILAN: YATAY (1920x1080) BOYUTLARI */
             width: 120rem; 
             height: 67.5rem;
             position: relative;
@@ -64,19 +53,47 @@
             box-shadow: 0 0 2rem rgba(0,0,0,0.25);
         }
 
+        /* --- GÜNCELLENMİŞ EKRAN GEÇİŞ LOGİĞİ --- */
         .screen {
             width: 100%; height: 100%; max-width: none; max-height: none;
             position: absolute; top: 0; left: 0; margin: auto;
             background-color: transparent; border-radius: 0; box-shadow: none; border: none;
-            padding: 2rem; box-sizing: border-box; display: none;
-            flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: 2rem; box-sizing: border-box; 
+            
+            /* 'display: flex' her zaman açık kalacak, düzen bozulmayacak */
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start; /* Varsayılan */
+            
+            /* Ekranları 'visibility' ile gizle */
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none; /* Gizliyken tıklanamaz */
+            transition: opacity 0.2s ease-out, visibility 0.2s;
         }
-        .screen.active { display: flex; }
+        
+        .screen.active { 
+            /* Aktif ekranı görünür ve tıklanabilir yap */
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* --- DÜZELTME BİTİŞİ --- */
+
+        /* Ekranların kendi iç hizalamaları (artık düzgün çalışacak) */
         #gameScreen, #scoreScreen {
-             flex-grow: 1; flex-direction: column; min-height: 0;
-             width: 100%; justify-content: space-between; overflow: hidden;
+             flex-grow: 1;
+             min-height: 0;
+             width: 100%;
+             justify-content: space-between; /* Başı ve sonu hizala */
+             overflow: hidden;
         }
-        #homeScreen { text-align: center; justify-content: center;}
+        #homeScreen { 
+            text-align: center; 
+            justify-content: center; /* Ortala */
+        }
+        
         .title-container { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 2rem; flex-shrink: 0;}
         .title-text h1 { font-size: 4.5rem; color: var(--color-accent-1); margin: 0; font-family: var(--font-poppins); text-shadow: 1px 1px 2px var(--color-shadow-dark); }
         .title-text h2 { font-size: 3.5rem; font-weight: 700; color: var(--color-text-primary); margin: 0; text-shadow: 1px 1px 1px var(--color-shadow-light); font-family: var(--font-harmattan); }
@@ -103,6 +120,8 @@
         .action-btn { font-size: 1.3rem; border-radius: var(--border-radius-small); padding: 0.8rem 1.5rem; }
         .back-button { font-size: 2.5rem; width: 4.5rem; height: 4rem; padding: 0; color: var(--color-text-secondary);}
         #scoreToHomeButton { font-size: 1.5rem; width: auto; min-width: 5rem; height: 4rem; padding: 0 1.5rem; margin: 1.5rem auto 0; display: block; color: var(--color-text-secondary);}
+        
+        /* ÖNEMLİ: gameHeader, gameMain, gameFooter 'display: flex' olarak kalmalı (orijinal kodunuzdaki gibi) */
         #gameHeader {
             position: relative; display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem;
             border-bottom: none; margin-bottom: 0.5rem; flex-shrink: 0; padding-left: 0; padding-right: 0; width: 100%;
@@ -112,6 +131,7 @@
         #levelScoreDisplay { color: var(--color-score); font-weight: 700; }
         #timerDisplay { color: var(--color-error); font-weight: 700; font-size: 1.7rem;}
         #mistakeCounter { color: var(--color-error); font-size: 2rem; letter-spacing: 2px; margin-left: 0.5rem; margin-right: 0.5rem; background: none; box-shadow: none; padding: 0;}
+        
         .game-main {
             text-align: center; flex-grow: 1; display: flex; flex-direction: column;
             align-items: center; justify-content: center; min-height: 0;
@@ -194,12 +214,15 @@
              cursor: not-allowed !important; transform: none !important; opacity: 0.7 !important;
         }
         .letter-bank-btn.correct-form:disabled { background-color: var(--color-correct-light) !important; color: var(--color-correct) !important; box-shadow: inset 2px 2px 4px #76b198, inset -2px -2px 4px #baffa0 !important; opacity: 0.8 !important; }
-        #gameFooter { text-align: center; flex-shrink: 0; padding-top: 0.8rem; margin-top: 0.5rem; border-top: none; display: flex; justify-content: space-between; align-items: center; width: 100%; padding-left: 0; padding-right: 0;
+        
+        #gameFooter { 
+            text-align: center; flex-shrink: 0; padding-top: 0.8rem; margin-top: 0.5rem; border-top: none; display: flex; justify-content: space-between; align-items: center; width: 100%; padding-left: 0; padding-right: 0;
             max-width: 45rem; margin-left: auto; margin-right: auto;
         }
         #pointsBurst { position: absolute; top: 0.5rem; left: 5.5rem; font-size: 1.2rem; font-weight: bold; color: var(--color-score); opacity: 0; pointer-events: none; white-space: nowrap; background: var(--color-bg); padding: 0.3rem 0.6rem; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
         #pointsBurst.active { animation: points-burst 0.8s ease-out forwards; }
         @keyframes points-burst { 0% { transform: translateY(0) scale(0.8); opacity: 1; } 50% { transform: translateY(-15px) scale(1.1); opacity: 0.9; } 100% { transform: translateY(-30px) scale(0.9); opacity: 0; } }
+        
         #scoreScreen { align-items: center; justify-content: center; text-align: center; padding: 1.5rem; }
         #scoreScreen h2 { font-size: 2.5rem; color: var(--color-accent-1); margin-bottom: 1rem; text-shadow: 1px 1px 2px var(--color-shadow-dark);}
         #scoreScreen p { font-size: 1.8rem; color: var(--color-text-primary); margin-bottom: 1.5rem; }
@@ -215,10 +238,6 @@
         /* --- DİKEY EKRAN (Telefon/Tablet) 540x960 ORANI --- */
         @media (orientation: portrait) {
             html {
-                /* Dikey Oran: 540x960 - GÜNCELLENDİ (dvh kullanımı)
-                  33.75 = 540 / 16
-                  60 = 960 / 16
-                */
                 font-size: min(calc(100vw / 33.75), calc(100dvh / 60));
             }
             
@@ -275,8 +294,7 @@
 
     <div id="gameWrapper">
 
-        <div id="homeScreen" class="screen active">
-             <div class="title-container">
+        <div id="homeScreen" class="screen active"> <div class="title-container">
                 <div class="title-text">
                     <h1>Dinle Ve Yaz!</h1>
                     <h2>اِسْتَمِعْ وَاكْتُبْ</h2>
@@ -340,14 +358,13 @@
              1: { timePerLetter: 8, words: [ { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "لَعِبَ", base_ar:"لعب", tr: "Oyun oynama" }, { ar: "عَمَلٌ", base_ar:"عمل", tr: "Çalışma" }, { ar: "فَشَلٌ", base_ar:"فشل", tr: "Başarısızlık" }, { ar: "كَسَلٌ", base_ar:"كسل", tr: "Tembellik" }, { ar: "ذَهَبٍ", base_ar:"ذهب", tr: "Altın" }, { ar: "سَمَكٍ", base_ar:"سمك", tr: "Balık" }, { ar: "هُوَ", base_ar:"هو", tr: "O - erkek" }, { ar: "هِيَ", base_ar:"هي", tr: "O - kız" }, { ar: "مِنْ", base_ar:"من", tr: "-den, -dan" } ] },
              2: { timePerLetter: 7, words: [ { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "هِيَ", base_ar:"هي", tr: "O" }, { ar: "عَنْ", base_ar:"عن", tr: "hakkında" }, { ar: "لَمْ", base_ar:"لم", tr: "-medi, -madı" }, { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "جَلَسَ", base_ar:"جلس", tr: "Oturdu" }, { ar: "كَتَبَ", base_ar:"كتب", tr: "Yazdı" }, { ar: "ذَهَبٌ", base_ar:"ذهب", tr: "Altın" }, { ar: "بَحْرٌ", base_ar:"بحر", tr: "Deniz" }, { ar: "مَطْبَخٌ", base_ar:"مطبخ", tr: "Mutfak" }, { ar: "يَكْتُبُ", base_ar:"يكتب", tr: "Yazıyor" }, { ar: "يَغْسِلُ", base_ar:"يغسل", tr: "Yıkıyor" } ] },
              3: { timePerLetter: 6, words: [ { ar: "لَا", base_ar:"ل", tr: "Hayır" }, { ar: "أَنَا", base_ar:"انا", tr: "Ben" }, { ar: "بَابٌ", base_ar:"باب", tr: "Kapı" }, { ar: "هُنَا", base_ar:"هن", tr: "Burada" }, { ar: "خَارِجًا", base_ar:"خرج", tr: "Dışında" }, { ar: "يَشْرَبُ", base_ar:"يشرب", tr: "İçiyor" }, { ar: "يَغْسِلُ", base_ar:"يغسل", tr: "Yıkıyor" }, { ar: "غَسَلَ", base_ar:"غسل", tr: "Yıkadı" }, { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "سَمَكٌ", base_ar:"سمk", tr: "Balık" }, { ar: "أَنْ", base_ar:"ان", tr: "-mek, mak" }, { ar: "إِنْ", base_ar:"ان", tr: "-se, -sa" } ] },
-             4: { timePerLetter: 5, words: [ { ar: "فِي", base_ar:"في", tr: "içinde, -da, -da" }, { ar: "مَعًا", base_ar:"مع", tr: "Beraber" }, { ar: "عِنْدَ", base_ar:"عند", tr: "var, yanında" }, { ar: "صَفٌّ", base_ar:"صف", tr: "Sınıf" }, { ar: "مَخْرَجٌ", base_ar:"مخرج", tr: "Çıkış yeri" }, { ar: "يَنَامُ", base_ar:"ينم", tr: "Uyuyor" }, { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "يَجْلِسُ", base_ar:"يجلس", tr: "Oturuyor" }, { ar: "يَقْرَأُ", base_ar:"يقر", tr: "Okuyor" }, { ar: "يَلْعَبُ", base_ar:"يلعب", tr: "Oynuyor" }, { ar: "يَدْرُسُ", base_ar:"يدرس", tr: "Ders Çalışıyor" }, { ar: "يَفْتَحُ", base_ar:"يفتح", tr: "Açıyor" }, { ar: "يَحْمِلُ", base_ar:"يحمل", tr: "Taşıyor" } ] },
+             44: { timePerLetter: 5, words: [ { ar: "فِي", base_ar:"في", tr: "içinde, -da, -da" }, { ar: "مَعًا", base_ar:"مع", tr: "Beraber" }, { ar: "عِنْدَ", base_ar:"عند", tr: "var, yanında" }, { ar: "صَفٌّ", base_ar:"صف", tr: "Sınıf" }, { ar: "مَخْرَجٌ", base_ar:"مخرج", tr: "Çıkış yeri" }, { ar: "يَنَامُ", base_ar:"ينم", tr: "Uyuyor" }, { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "يَجْلِسُ", base_ar:"يجلس", tr: "Oturuyor" }, { ar: "يَقْرَأُ", base_ar:"يقر", tr: "Okuyor" }, { ar: "يَلْعَبُ", base_ar:"يلعب", tr: "Oynuyor" }, { ar: "يَدْرُsُ", base_ar:"يدرس", tr: "Ders Çalışıyor" }, { ar: "يَفْتَحُ", base_ar:"يفتح", tr: "Açıyor" }, { ar: "يَحْمِلُ", base_ar:"يحمل", tr: "Taşıyor" } ] },
              5: { timePerLetter: 4, words: [ { ar: "اِسْتَمِعي", base_ar:"استمع", tr: "Dinle - kız" }, { ar: "تَشَرَّفْتُ", base_ar:"تشرفت", tr: "Tanıştığıma memnun oldum" }, { ar: "عَلَيْكُمْ", base_ar:"عليكم", tr: "üzerinize olsun" }, { ar: "وَسَهْلًا", base_ar:"وسهل", tr: "Hoş geldiniz" }, { ar: "الْـحَمْد", base_ar:"الحمد", tr: "Hamd" }, { ar: "اِحْتَرِمْ", base_ar:"احترم", tr: "Saygı duy!" }, { ar: "اكْتُبي", base_ar:"اكتب", tr: "Yaz - kız" }, { ar: "أَعِيدي", base_ar:"اعيد", tr: "Tekrar et - kız" }, { ar: "تَعارُف", base_ar:"تعرف", tr: "Tanışma" }, { ar: "صَبَاح", base_ar:"صبح", tr: "Sabah" }, { ar: "مَسَاءً", base_ar:"مس", tr: "Akşam" } ] },
              6: { timePerLetter: 4, words: [ { ar: "يَسْتَيْقِظُ", base_ar:"يستيقظ", tr: "Uyanıyor" }, { ar: "يَسْتَرِيحُ", base_ar:"يسترح", tr: "Dinleniyor" }, { ar: "اُدْرُsِي", base_ar:"ادrs", tr: "Ders çalış!" }, { ar: "اِتَّفَقْنَا", base_ar:"اتفق", tr: "Anlaştık!" }, { ar: "مَرْحَبًا", base_ar:"مرحب", tr: "Merhaba" }, { ar: "سَلَامٍ", base_ar:"سلم", tr: "Esenlik" }, { ar: "اِبْتَعِدْ", base_ar:"ابتعد", tr: "Uzaklaş!" }, { ar: "اُرْسُمِي", base_ar:"ارسم", tr: "Resim yap!" }, { ar: "تَحِيَّة", base_ar:"تحية", tr: "Selamlaşma" }, { ar: "يَقُومُ", base_ar:"يقوم", tr: "Kalkıyor" }, { ar: "دَفْتَرٍ", base_ar:"دفتر", tr: "Defter" }, { ar: "طَبْعًا", base_ar:"طبع", tr: "Peki, tabii!" }, { ar: "مَكْتَبٌ", base_ar:"مكتب", tr: "Masa" } ] },
              7: { timePerLetter: 3, words: [ { ar: "يَتَحَدَّثُون", base_ar:"يتحدث", tr: "Konuşuyorlar" }, { ar: "يَتَعَاوَنُون", base_ar:"يتعاون", tr: "Yardımlaşıyorlar" }, { ar: "يَرْجِعُون", base_ar:"يرجع", tr: "Dönüyorlar" }, { ar: "مَشْرُوبَات", base_ar:"مشروب", tr: "İçecekler" }, { ar: "تَكَلَّمْتُ", base_ar:"تكلم", tr: "Konuştum" }, { ar: "اِسْتَمِcِي", base_ar:"استمع", tr: "Dinle" }, { ar: "لَيْلَة", base_ar:"ليل", tr: "Gece" }, { ar: "ظُهْرٌ", base_ar:"ظهر", tr: "Öğle" }, { ar: "وَجْهٌ", base_ar:"وجه", tr: "Yüz" }, { ar: "أُنَظِّفُ", base_ar:"انظف", tr: "Temizliyorum" }, { ar: "أُرَاجِعُ", base_ar:"اراجع", tr: "Tekrar ediyorum" }, { ar: "اَلْوَدَاع", base_ar:"الوداع", tr: "Vedalaşmak" }, { ar: "طَالِبٌ", base_ar:"طالب", tr: "Erkek öğrenci" }, { ar: "كِتَابٌ", base_ar:"كتب", tr: "Kitap" } ] },
-             8: { timePerLetter: 3, words: [ { ar: "مُعَلِّمَات", base_ar:"معلم", tr: "Öğretmenler" }, { ar: "مَأْكُولَات", base_ar:"ماكول", tr: "Yiyecekler" }, { ar: "يَلْعَبُون", base_ar:"يلعب", tr: "Oynuyorlar" }, { ar: "تِلْفَازٌ", base_ar:"تلفز", tr: "Televizyon" }, { ar: "مَلَابِسٍ", base_ar:"ملبس", tr: "Elbiseler" }, { ar: "نِظَAMٌ", base_ar:"نظم", tr: "Düzen" }, { ar: "مُبَكِّرًا", base_ar:"مبكر", tr: "Erken" }, { ar: "اِسْتِرَAHə", base_ar:"استرح", tr: "Dinlenmek" }, { ar: "أَتَنَاوَلُ", base_ar:"اتناول", tr: "Yiyorum" }, { ar: "تَعَلَّمْتُ", base_ar:"تعلم", tr: "Öğrendim" }, { ar: "مُدَرِّsə", base_ar:"مدرس", tr: "Öğretmen" }, { ar: "يُصَلِّي", base_ar:"يصل", tr: "Namaz kılıyor" }, { ar: "يُنَظِّفُ", base_ar:"ينظf", tr: "Temizliyor" }, { ar: "جَمِILٌ", base_ar:"جميل", tr: "Güzel" }, { ar: "طَاوِلَة", base_ar:"طاول", tr: "Masa" }, { ar: "يَخْرُجُ", base_ar:"يخرج", tr: "Çıkıyor" } ] }
+             8: { timePerLetter: 3, words: [ { ar: "مُعَلِّمَات", base_ar:"معلم", tr: "Öğretmenler" }, { ar: "مَأْكُولَات", base_ar:"ماكول", tr: "Yiyecekler" }, { ar: "يَلْعَبُون", base_ar:"يلعب", tr: "Oynuyorlar" }, { ar: "تِلْfَازٌ", base_ar:"تلفز", tr: "Televizyon" }, { ar: "مَلَابِسٍ", base_ar:"ملبس", tr: "Elbiseler" }, { ar: "نِظَAMٌ", base_ar:"نظم", tr: "Düzen" }, { ar: "مُبَكِّرًا", base_ar:"مبكر", tr: "Erken" }, { ar: "اِسْتِرَAHə", base_ar:"استرح", tr: "Dinlenmek" }, { ar: "أَتَنَاوَلُ", base_ar:"اتناول", tr: "Yiyorum" }, { ar: "تَعَلَّمْتُ", base_ar:"تعلم", tr: "Öğrendim" }, { ar: "مُدَرِّsə", base_ar:"مدرس", tr: "Öğretmen" }, { ar: "يُصَلِّي", base_ar:"يصل", tr: "Namaz kılıyor" }, { ar: "يُنَظِّفُ", base_ar:"ينظf", tr: "Temizliyor" }, { ar: "جَمِILٌ", base_ar:"جميل", tr: "Güzel" }, { ar: "طَاوِلَة", base_ar:"طاول", tr: "Masa" }, { ar: "يَخْرُجُ", base_ar:"يخرج", tr: "Çıkıyor" } ] }
         };
 
-        // --- DOM Elementleri ---
         const homeScreen = document.getElementById('homeScreen');
         const gameScreen = document.getElementById('gameScreen');
         const scoreScreen = document.getElementById('scoreScreen');
@@ -375,7 +392,6 @@
         const incorrectListEl = document.getElementById('incorrectList');
         const incorrectWordsUlEl = document.getElementById('incorrectWordsUl');
 
-        // --- Oyun Durum Değişkenleri ---
         let selectedLevel = null;
         let currentWordIndex = 0;
         let levelWords = [], currentWord = {}, timerInterval, remainingTime = 0;
@@ -397,7 +413,6 @@
         const shortVowels = ['َ', 'ِ', 'ُ', 'ً', 'ٍ', 'ٌ', 'ْ'];
         let fullWordChars = [];
 
-        // --- Fonksiyonlar ---
         Object.keys(gameData).forEach(level => {
             const levelData = gameData[level];
             if (levelData.words && Array.isArray(levelData.words)) {
@@ -408,7 +423,6 @@
             }
         });
         console.log("Game data updated with audio sources:", gameData);
-
 
          function playAudio() {
              console.log("playAudio called. Word object:", currentWord);
@@ -481,11 +495,16 @@
             basePointsPerWord = Math.floor(100 / numWords);
             pointsRemainder = 100 % numWords;
 
-            gameHeader.style.display = 'flex';
-            gameMain.style.display = 'flex';
-            gameFooter.style.display = 'flex';
+            /* --- GÜNCELLENDİ: Bu JS kodları kaldırıldı. ---
+               Çünkü CSS zaten 'gameHeader' vb. için 'display: flex' ayarlıyor.
+               Bu komutlar CSS ile çakışmaya neden olabilir.
+            */
+            // gameHeader.style.display = 'flex';
+            // gameMain.style.display = 'flex';
+            // gameFooter.style.display = 'flex';
+            
             levelScoreDisplay.textContent = `Puan: 0`;
-            mistakeCounter.style.display = 'block';
+            mistakeCounter.style.display = 'block'; // Bu kalabilir, kalp gösterimi için.
 
             homeScreen.classList.remove('active');
             scoreScreen.classList.remove('active');
@@ -591,12 +610,15 @@
             gameActive = false; waitingForAudioClick = false;
             gameScreen.classList.remove('active');
             scoreScreen.classList.add('active');
+            
+            // GÜNCELLENDİ: Bu JS kodları kaldırıldı. CSS zaten hallediyor.
+            // scoreTitle.textContent = "Seviye Tamamlandı!"; 
+            // singlePlayerScoreText.style.display = 'block';
 
-            scoreTitle.textContent = "Seviye Tamamlandı!"; singlePlayerScoreText.style.display = 'block';
             finalScoreValueEl.textContent = currentLevelScore; totalPossibleScoreEl.textContent = "100";
             incorrectWordsUlEl.innerHTML = '';
             if (incorrectWords.length > 0) {
-                incorrectListEl.style.display = 'block';
+                incorrectListEl.style.display = 'block'; // Bu kalmalı
                 incorrectWords.forEach(word => {
                     const li = document.createElement('li');
                     const spanTr = document.createElement('span'); spanTr.textContent = word.tr || '';
@@ -604,7 +626,9 @@
                     li.appendChild(spanTr); li.appendChild(spanAr);
                     incorrectWordsUlEl.appendChild(li);
                 });
-            } else { incorrectListEl.style.display: 'none'; }
+            } else { 
+                incorrectListEl.style.display = 'none'; // Bu kalmalı
+            }
         }
 
         function showHomeScreen() {
@@ -620,7 +644,6 @@
 
         function highlightExpectedInput(clear = false) { }
 
-        // --- Event Listeners ---
         backToHomeButton.addEventListener('click', showHomeScreen);
         scoreToHomeButton.addEventListener('click', showHomeScreen);
 
