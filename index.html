@@ -104,7 +104,10 @@
         #turkishWord, #arabicOutputContainer { padding: 0.5rem 1rem; min-height: auto; display: flex; align-items: center; position: relative; background: var(--color-surface); border: none; border-radius: var(--border-radius-main); box-shadow: inset 3px 3px 6px var(--color-shadow-dark), inset -3px -3px 6px var(--color-shadow-light); width: 100%; text-align: center; justify-content: center; flex-basis: auto; box-sizing: border-box; flex-shrink: 0; line-height: 1.3; overflow: hidden; word-break: break-all; }
         #turkishWord { order: 3; font-size: 4rem; margin-top: 0; margin-bottom: 0; font-family: var(--font-poppins); font-weight: 600; color: var(--color-text-primary); }
         #arabicOutputContainer { order: 1; gap: 0.5rem; direction: rtl; background: var(--color-surface); margin-bottom: 0; }
-        #arabicOutputDisplay { width: auto; max-width: 100%; white-space: normal; font-family: var(--font-harmattan); font-weight: 700; line-height: 1.3; border: none; background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default; font-size: 4rem; transition: none; color: var(--color-text-primary); }
+        
+        /* GÜNCELLENDİ: Arapça font boyutu yatayda 6rem'e büyütüldü */
+        #arabicOutputDisplay { width: auto; max-width: 100%; white-space: normal; font-family: var(--font-harmattan); font-weight: 700; line-height: 1.3; border: none; background: none; padding: 0; box-shadow: none; direction: rtl; cursor: default; font-size: 6rem; transition: none; color: var(--color-text-primary); }
+        
         #arabicOutputDisplay[lang="ar"] { font-family: var(--font-harmattan); /* Ekstra güvence */ }
         #arabicOutputDisplay.empty::before { content: '...'; color: var(--color-text-secondary); font-weight: normal; font-size: 1.5rem; opacity: 0.8; width: 100%; text-align: center;}
         #correctAnswerContainer, #correctAnswerDisplay, #helperGrid, .char-btn, .separator, .tool-btn-danger, #checkButton { display: none !important; }
@@ -155,11 +158,12 @@
         #incorrectList li span:last-child[lang="ar"] { font-family: var(--font-harmattan); /* Ekstra güvence */ }
 
 
-        /* Dinamik Harf Satırı Genişlikleri (Yatay/Varsayılan) */
-        #letterBankContainer.rows-2 #letterBank { max-width: 22rem; }
-        #letterBankContainer.rows-3 #letterBank { max-width: 22rem; }
-        #letterBankContainer.rows-4 #letterBank { max-width: 28rem; }
-        #letterBankContainer.rows-5 #letterBank { max-width: 28rem; }
+        /* --- GÜNCELLENDİ: Dinamik Harf Satırı Genişlikleri (Yatay/Varsayılan) --- */
+        #letterBankContainer.rows-2 #letterBank { max-width: 22rem; } /* 4/satır (5-8 harf) */
+        #letterBankContainer.rows-3 #letterBank { max-width: 28rem; } /* 5/satır (9-10, 12-14 harf) */
+        #letterBankContainer.rows-4 #letterBank { max-width: 28rem; } /* 5/satır (16+ harf) */
+        #letterBankContainer.rows-5 #letterBank { max-width: 16rem; } /* 3/satır (15 harf) */
+        #letterBankContainer.rows-11 #letterBank { max-width: 22rem; } /* 4/satır (11 harf -> 4-4-3) */
         /* --- --- */
 
         /* --- DİKEY EKRAN (Telefon/Tablet) 540x960 ORANI --- */
@@ -173,12 +177,22 @@
             .level-btn { font-size: 1.5rem; padding: 1rem; }
             #gameHeader { max-width: 100%; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
             .header-info { font-size: 1.2rem; } #timerDisplay { font-size: 1.4rem; } #mistakeCounter { font-size: 1.5rem; }
-            #gameContent { max-width: 100%; gap: 0.5rem; }
-            #turkishWord, #arabicOutputDisplay { font-size: 2.5rem; }
+            
+            /* GÜNCELLENDİ: Dikeyde boşluk ve font boyutu arttı */
+            #gameContent { 
+                max-width: 100%; 
+                gap: 1rem; /* Minimum boşluk */
+                flex-grow: 1; /* Dikey alanı doldur */
+                justify-content: space-evenly; /* Öğeleri dikeyde eşit dağıt */
+            }
+            #turkishWord { font-size: 3rem; }
+            #arabicOutputDisplay { font-size: 5rem; } /* Arapça font boyutu dikeyde 5rem'e büyütüldü */
+
             #letterBankContainer { margin: 0; padding: 0.1rem; }
-            #letterBank { gap: 0.2rem; max-width: 100% !important; } /* GÜNCELLENDİ: !important ile ezme */
-            .letter-bank-btn { font-size: 2.2rem; width: 3rem; height: 3rem; margin: 0.1rem; border-radius: 0.5rem; padding: 0.2rem 0; }
-            .letter-bank-btn.hareke-char { font-size: 1.8rem; }
+            #letterBank { gap: 0.2rem; max-width: 100%; }
+            .letter-bank-btn { font-size: 2.5rem; width: 3.5rem; height: 3.5rem; margin: 0.1rem; border-radius: 0.5rem; padding: 0.2rem 0; }
+            .letter-bank-btn.hareke-char { font-size: 2.2rem; }
+            
             .back-button { width: 3.5rem; height: 3.2rem; font-size: 1.2rem; }
             .back-button::before{ width: 0.7em; height: 0.7em; border-width: 0.25em; }
             #audioControl { width: 3.5rem; height: 3.2rem; /* Boyutu eşitle */}
@@ -187,13 +201,18 @@
             #incorrectList { max-width: 100%; }
             #incorrectList li { font-size: 1rem; } #incorrectList li span:last-child { font-size: 1.3rem; }
 
-            /* --- GÜNCELLENDİ: Dikeyde letterBank genişlik kısıtlaması kaldırıldı --- */
-            /* Bu kurallar max-width: 100% !important olarak güncellendi */
-            #letterBankContainer.rows-2 #letterBank,
-            #letterBankContainer.rows-3 #letterBank,
-            #letterBankContainer.rows-4 #letterBank,
-            #letterBankContainer.rows-5 #letterBank { max-width: 100% !important; }
-            /* --- --- */
+            /* --- GÜNCELLENDİ: Dikey için dinamik satır genişlikleri (Yeni 3.5rem buton boyutuna göre) --- */
+            /* Dikey buton boyutu: 3.5rem + 0.2rem gap = ~3.7rem */
+            #letterBankContainer.rows-2 #letterBank { max-width: 15rem; } /* 4/satır (5-8 harf) */
+            #letterBankContainer.rows-3 #letterBank { max-width: 19rem; } /* 5/satır (9-10, 12-14 harf) */
+            #letterBankContainer.rows-4 #letterBank { max-width: 19rem; } /* 5/satır (16+ harf) */
+            #letterBankContainer.rows-5 #letterBank { max-width: 12rem; } /* 3/satır (15 harf) */
+            #letterBankContainer.rows-11 #letterBank { max-width: 15rem; } /* 4/satır (11 harf -> 4-4-3) */
+            
+            /* GÜNCELLENDİ: Ana Ekranı Dikeyde Yay */
+            #homeScreen {
+                justify-content: space-evenly;
+            }
         }
     </style>
 </head>
@@ -314,15 +333,16 @@
         }
         // --- ---
 
+        // --- GÜNCELLENDİ: Hatalı karakterler temizlendi ---
         const gameData = {
              1: { timePerLetter: 8, words: [ { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "لَعِبَ", base_ar:"لعب", tr: "Oyun oynama" }, { ar: "عَمَلٌ", base_ar:"عمل", tr: "Çalışma" }, { ar: "فَشَلٌ", base_ar:"فشل", tr: "Başarısızlık" }, { ar: "كَسَلٌ", base_ar:"كسل", tr: "Tembellik" }, { ar: "ذَهَبٍ", base_ar:"ذهب", tr: "Altın" }, { ar: "سَمَكٍ", base_ar:"سمك", tr: "Balık" }, { ar: "هُوَ", base_ar:"هو", tr: "O - erkek" }, { ar: "هِيَ", base_ar:"هي", tr: "O - kız" }, { ar: "مِنْ", base_ar:"من", tr: "-den, -dan" } ] },
              2: { timePerLetter: 7, words: [ { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "هِيَ", base_ar:"هي", tr: "O" }, { ar: "عَنْ", base_ar:"عن", tr: "hakkında" }, { ar: "لَمْ", base_ar:"لم", tr: "-medi, -madı" }, { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "جَلَسَ", base_ar:"جلس", tr: "Oturdu" }, { ar: "كَتَبَ", base_ar:"كتب", tr: "Yazdı" }, { ar: "ذَهَبٌ", base_ar:"ذهب", tr: "Altın" }, { ar: "بَحْرٌ", base_ar:"بحر", tr: "Deniz" }, { ar: "مَطْبَخٌ", base_ar:"مطبخ", tr: "Mutfak" }, { ar: "يَكْتُبُ", base_ar:"يكتب", tr: "Yazıyor" }, { ar: "يَغْسِلُ", base_ar:"يغسل", tr: "Yıkıyor" } ] },
-             3: { timePerLetter: 6, words: [ { ar: "لَا", base_ar:"ل", tr: "Hayır" }, { ar: "أَنَا", base_ar:"انا", tr: "Ben" }, { ar: "بَابٌ", base_ar:"باب", tr: "Kapı" }, { ar: "هُنَا", base_ar:"هن", tr: "Burada" }, { ar: "خَارِجًا", base_ar:"خرج", tr: "Dışında" }, { ar: "يَشْرَبُ", base_ar:"يشرب", tr: "İçiyor" }, { ar: "يَغْسِلُ", base_ar:"يغسل", tr: "Yıkıyor" }, { ar: "غَسَلَ", base_ar:"غسل", tr: "Yıkadı" }, { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "سَمَكٌ", base_ar:"سمك", tr: "Balık" }, { ar: "أَنْ", base_ar:"ان", tr: "-mek, mak" }, { ar: "إِنْ", base_ar:"ان", tr: "-se, -sa" } ] }, // Düzeltme: سمk -> سمك
-             4: { timePerLetter: 5, words: [ { ar: "فِي", base_ar:"في", tr: "içinde, -da, -da" }, { ar: "مَعًا", base_ar:"مع", tr: "Beraber" }, { ar: "عِنْدَ", base_ar:"عند", tr: "var, yanında" }, { ar: "صَفٌّ", base_ar:"صف", tr: "Sınıf" }, { ar: "مَخْرَجٌ", base_ar:"مخرج", tr: "Çıkış yeri" }, { ar: "يَنَامُ", base_ar:"ينم", tr: "Uyuyor" }, { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "يَجْلِسُ", base_ar:"يجلس", tr: "Oturuyor" }, { ar: "يَقْرَأُ", base_ar:"يقر", tr: "Okuyor" }, { ar: "يَلْعَبُ", base_ar:"يلعب", tr: "Oynuyor" }, { ar: "يَدْرُسُ", base_ar:"يدرس", tr: "Ders Çalışıyor" }, { ar: "يَفْتَحُ", base_ar:"يفتح", tr: "Açıyor" }, { ar: "يَحْمِلُ", base_ar:"يحمل", tr: "Taşıyor" } ] }, // Düzeltme: يَدْرُsُ -> يَدْرُسُ
-             5: { timePerLetter: 4, words: [ { ar: "اِسْتَمِعي", base_ar:"استمع", tr: "Dinle - kız" }, { ar: "تَشَرَّفْتُ", base_ar:"تشرفت", tr: "Tanıştığıma memnun oldum" }, { ar: "عَلَيْكُمْ", base_ar:"عليكم", tr: "üzerinize olsun" }, { ar: "وَسَهْلًا", base_ar:"وسهل", tr: "Hoş geldiniz" }, { ar: "الْـحَمْد", base_ar:"الحمد", tr: "Hamd" }, { ar: "اِحْتَرِمْ", base_ar:"احترم", tr: "Saygı duy!" }, { ar: "اكْتُبي", base_ar:"اكتب", tr: "Yaz - kız" }, { ar: "أَعِيدي", base_ar:"اعيد", tr: "Tekrar et - kız" }, { ar: "تَعارُف", base_ar:"تعرف", tr: "Tanışma" }, { ar: "صَبَاح", base_ar:"صبح", tr: "Sabah" }, { ar: "مَسَاءً", base_ar:"مس", tr: "Akşam" } ] },
-             6: { timePerLetter: 4, words: [ { ar: "يَسْتَيْقِظُ", base_ar:"يستيقظ", tr: "Uyanıyor" }, { ar: "يَسْتَرِيحُ", base_ar:"يسترح", tr: "Dinleniyor" }, { ar: "اُدْرُسِي", base_ar:"ادرس", tr: "Ders çalış!" }, { ar: "اِتَّفَقْنَا", base_ar:"اتفق", tr: "Anlaştık!" }, { ar: "مَرْحَبًا", base_ar:"مرحب", tr: "Merhaba" }, { ar: "سَلَامٍ", base_ar:"سلم", tr: "Esenlik" }, { ar: "اِبْتَعِدْ", base_ar:"ابتعد", tr: "Uzaklaş!" }, { ar: "اُرْسُمِي", base_ar:"ارسم", tr: "Resim yap!" }, { ar: "تَحِيَّة", base_ar:"تحية", tr: "Selamlaşma" }, { ar: "يَقُومُ", base_ar:"يقوم", tr: "Kalkıyor" }, { ar: "دَفْتَرٍ", base_ar:"دفتر", tr: "Defter" }, { ar: "طَبْعًا", base_ar:"طبع", tr: "Peki, tabii!" }, { ar: "مَكْتَبٌ", base_ar:"مكتب", tr: "Masa" } ] }, // Düzeltme: اَدْرُsِي -> اُدْرُسِي
-             7: { timePerLetter: 3, words: [ { ar: "يَتَحَدَّثُون", base_ar:"يتحدث", tr: "Konuşuyorlar" }, { ar: "يَتَعَاوَنُون", base_ar:"يتعاون", tr: "Yardımlaşıyorlar" }, { ar: "يَرْجِعُون", base_ar:"يرجع", tr: "Dönüyorlar" }, { ar: "مَشْرُوبَات", base_ar:"مشروب", tr: "İçecekler" }, { ar: "تَكَلَّمْتُ", base_ar:"تكلم", tr: "Konuştum" }, { ar: "اِسْتَمِعِي", base_ar:"استمع", tr: "Dinle" }, { ar: "لَيْلَة", base_ar:"ليل", tr: "Gece" }, { ar: "ظُهْرٌ", base_ar:"ظهر", tr: "Öğle" }, { ar: "وَجْهٌ", base_ar:"وجه", tr: "Yüz" }, { ar: "أُنَظِّفُ", base_ar:"انظف", tr: "Temizliyorum" }, { ar: "أُرَاجِعُ", base_ar:"اراجع", tr: "Tekrar ediyorum" }, { ar: "اَلْوَدَاع", base_ar:"الوداع", tr: "Vedalaşmak" }, { ar: "طَالِبٌ", base_ar:"طالب", tr: "Erkek öğrenci" }, { ar: "كِتَابٌ", base_ar:"كتب", tr: "Kitap" } ] }, // Düzeltme: اِسْتَمِcِي -> اِسْتَمِعِي
-             8: { timePerLetter: 3, words: [ { ar: "مُعَلِّمَات", base_ar:"معلم", tr: "Öğretmenler" }, { ar: "مَأْكُولَات", base_ar:"ماكول", tr: "Yiyecekler" }, { ar: "يَلْعَبُون", base_ar:"يلعب", tr: "Oynuyorlar" }, { ar: "تِلْفَازٌ", base_ar:"تلفز", tr: "Televizyon" }, { ar: "مَلَابِسٍ", base_ar:"ملبس", tr: "Elbiseler" }, { ar: "نِظَامٌ", base_ar:"نظم", tr: "Düzen" }, { ar: "مُبَكِّرًا", base_ar:"مبكر", tr: "Erken" }, { ar: "اِسْتِرَاحَة", base_ar:"استرح", tr: "Dinlenmek" }, { ar: "أَتَنَاوَلُ", base_ar:"اتناول", tr: "Yiyorum" }, { ar: "تَعَلَّمْتُ", base_ar:"تعلم", tr: "Öğrendim" }, { ar: "مُدَرِّسَة", base_ar:"مدرس", tr: "Öğretmen" }, { ar: "يُصَلِّي", base_ar:"يصل", tr: "Namaz kılıyor" }, { ar: "يُنَظِّفُ", base_ar:"ينظف", tr: "Temizliyor" }, { ar: "جَمِيلٌ", base_ar:"جميل", tr: "Güzel" }, { ar: "طَاوِلَة", base_ar:"طاول", tr: "Masa" }, { ar: "يَخْرُجُ", base_ar:"يخرج", tr: "Çıkıyor" } ] } // Düzeltmeler: تِلْfَازٌ->تِلْفَازٌ, نِظَAMٌ->نِظَامٌ, اِسْتِرَAHə->اِسْتِرَاحَة, مُدَرِّsə->مُدَرِّسَة, جَمِILٌ->جَمِيلٌ, يُنَظِّفُ
+             3: { timePerLetter: 6, words: [ { ar: "لَا", base_ar:"ل", tr: "Hayır" }, { ar: "أَنَا", base_ar:"انا", tr: "Ben" }, { ar: "بَابٌ", base_ar:"باب", tr: "Kapı" }, { ar: "هُنَا", base_ar:"هن", tr: "Burada" }, { ar: "خَارِجًا", base_ar:"خرج", tr: "Dışında" }, { ar: "يَشْرَبُ", base_ar:"يشرب", tr: "İçiyor" }, { ar: "يَغْسِلُ", base_ar:"يغسل", tr: "Yıkıyor" }, { ar: "غَسَلَ", base_ar:"غسل", tr: "Yıkadı" }, { ar: "نَعَمْ", base_ar:"نعم", tr: "Evet" }, { ar: "قَلَمٍ", base_ar:"قلم", tr: "Kalem" }, { ar: "سَمَكٌ", base_ar:"سمك", tr: "Balık" }, { ar: "أَنْ", base_ar:"ان", tr: "-mek, mak" }, { ar: "إِنْ", base_ar:"ان", tr: "-se, -sa" } ] },
+             4: { timePerLetter: 5, words: [ { ar: "فِي", base_ar:"في", tr: "içinde, -da, -da" }, { ar: "مَعًا", base_ar:"مع", tr: "Beraber" }, { ar: "عِنْدَ", base_ar:"عند", tr: "var, yanında" }, { ar: "صَفٌّ", base_ar:"صف", tr: "Sınıf" }, { ar: "مَخْرَجٌ", base_ar:"مخرج", tr: "Çıkış yeri" }, { ar: "يَنَامُ", base_ar:"ينم", tr: "Uyuyor" }, { ar: "هُوَ", base_ar:"هو", tr: "O" }, { ar: "يَجْلِسُ", base_ar:"يجلس", tr: "Oturuyor" }, { ar: "يَقْرَأُ", base_ar:"يقر", tr: "Okuyor" }, { ar: "يَلْعَبُ", base_ar:"يلعب", tr: "Oynuyor" }, { ar: "يَدْرُسُ", base_ar:"يدرس", tr: "Ders Çalışıyor" }, { ar: "يَفْتَحُ", base_ar:"يفتح", tr: "Açıyor" }, { ar: "يَحْمِلُ", base_ar:"يحمل", tr: "Taşıyor" } ] },
+             5: { timePerLetter: 4, words: [ { ar: "اِسْتَمِعي", base_ar:"استمع", tr: "Dinle - kız" }, { ar: "تَشَرَّفْتُ", base_ar:"تشرفت", tr: "Tanıştığıma memnun oldum" }, { ar: "عَلَيْكُمْ", base_ar:"عليكم", tr: "üzerinize olsun" }, { ar: "وَسَهْلًا", base_ar:"وسهل", tr: "Hoş geldiniz" }, { ar: "الْـحَمْد", base_ar:"الحمد", tr: "Hamd" }, { ar: "اِحْتَرِمْ", base_ar:"احترم", tr: "Saygı duy!" }, { ar: "اكْتُبِي", base_ar:"اكتب", tr: "Yaz - kız" }, { ar: "أَعِيدي", base_ar:"اعيد", tr: "Tekrar et - kız" }, { ar: "تَعارُف", base_ar:"تعرف", tr: "Tanışma" }, { ar: "صَبَاح", base_ar:"صبح", tr: "Sabah" }, { ar: "مَسَاءً", base_ar:"مس", tr: "Akşam" } ] },
+             6: { timePerLetter: 4, words: [ { ar: "يَسْتَيْقِظُ", base_ar:"يستيقظ", tr: "Uyanıyor" }, { ar: "يَسْتَرِيحُ", base_ar:"يسترح", tr: "Dinleniyor" }, { ar: "اُدْرُسِي", base_ar:"ادرس", tr: "Ders çalış!" }, { ar: "اِتَّفَقْنَا", base_ar:"اتفق", tr: "Anlaştık!" }, { ar: "مَرْحَبًا", base_ar:"مرحب", tr: "Merhaba" }, { ar: "سَلَامٍ", base_ar:"سلم", tr: "Esenlik" }, { ar: "اِبْتَعِدْ", base_ar:"ابتعد", tr: "Uzaklaş!" }, { ar: "اُرْسُمِي", base_ar:"ارسم", tr: "Resim yap!" }, { ar: "تَحِيَّة", base_ar:"تحية", tr: "Selamlaşma" }, { ar: "يَقُومُ", base_ar:"يقوم", tr: "Kalkıyor" }, { ar: "دَفْتَرٍ", base_ar:"دفتر", tr: "Defter" }, { ar: "طَبْعًا", base_ar:"طبع", tr: "Peki, tabii!" }, { ar: "مَكْتَبٌ", base_ar:"مكتب", tr: "Masa" } ] },
+             7: { timePerLetter: 3, words: [ { ar: "يَتَحَدَّثُون", base_ar:"يتحدث", tr: "Konuşuyorlar" }, { ar: "يَتَعَاوَنُون", base_ar:"يتعاون", tr: "Yardımlaşıyorlar" }, { ar: "يَرْجِعُون", base_ar:"يرجع", tr: "Dönüyorlar" }, { ar: "مَشْرُوبَات", base_ar:"مشروب", tr: "İçecekler" }, { ar: "تَكَلَّمْتُ", base_ar:"تكلم", tr: "Konuştum" }, { ar: "اِسْتَمِعِي", base_ar:"استمع", tr: "Dinle" }, { ar: "لَيْلَة", base_ar:"ليل", tr: "Gece" }, { ar: "ظُهْرٌ", base_ar:"ظهر", tr: "Öğle" }, { ar: "وَجْهٌ", base_ar:"وجه", tr: "Yüz" }, { ar: "أُنَظِّفُ", base_ar:"انظف", tr: "Temizliyorum" }, { ar: "أُرَاجِعُ", base_ar:"اراجع", tr: "Tekrar ediyorum" }, { ar: "اَلْوَدَاع", base_ar:"الوداع", tr: "Vedalaşmak" }, { ar: "طَالِبٌ", base_ar:"طالب", tr: "Erkek öğrenci" }, { ar: "كِتَابٌ", base_ar:"كتب", tr: "Kitap" } ] },
+             8: { timePerLetter: 3, words: [ { ar: "مُعَلِّمَات", base_ar:"معلم", tr: "Öğretmenler" }, { ar: "مَأْكُولَات", base_ar:"ماكول", tr: "Yiyecekler" }, { ar: "يَلْعَبُون", base_ar:"يلعب", tr: "Oynuyorlar" }, { ar: "تِلْفَازٌ", base_ar:"تلفز", tr: "Televizyon" }, { ar: "مَلَابِسٍ", base_ar:"ملبس", tr: "Elbiseler" }, { ar: "نِظَامٌ", base_ar:"نظم", tr: "Düzen" }, { ar: "مُبَكِّرًا", base_ar:"مبكر", tr: "Erken" }, { ar: "اِسْتِرَاحَة", base_ar:"استرح", tr: "Dinlenmek" }, { ar: "أَتَنَاوَلُ", base_ar:"اتناول", tr: "Yiyorum" }, { ar: "تَعَلَّمْتُ", base_ar:"تعلم", tr: "Öğrendim" }, { ar: "مُدَرِّسَة", base_ar:"مدرس", tr: "Öğretmen" }, { ar: "يُصَلِّي", base_ar:"يصل", tr: "Namaz kılıyor" }, { ar: "يُنَظِّفُ", base_ar:"ينظف", tr: "Temizliyor" }, { ar: "جَمِيلٌ", base_ar:"جميل", tr: "Güzel" }, { ar: "طَاوِلَة", base_ar:"طاول", tr: "Masa" }, { ar: "يَخْرُجُ", base_ar:"يخرج", tr: "Çıkıyor" } ] }
         };
 
         const homeScreen = document.getElementById('homeScreen');
@@ -474,12 +494,25 @@
 
             if (currentWordIndex >= levelWords.length) { showScoreScreen(); return; }
             currentWord = levelWords[currentWordIndex];
+            
+            // --- GÜNCELLENDİ: Yeni spesifik satır atlama mantığı ---
             const wordLength = Array.from(currentWord.ar).length;
-            letterBankContainer.classList.remove('rows-2', 'rows-3', 'rows-4', 'rows-5');
-            if (wordLength >= 5 && wordLength <= 8) { letterBankContainer.classList.add('rows-2'); }
-            else if (wordLength >= 9 && wordLength <= 12) { letterBankContainer.classList.add('rows-3'); }
-            else if (wordLength >= 13 && wordLength <= 18) { letterBankContainer.classList.add('rows-4'); }
-            else if (wordLength >= 19) { letterBankContainer.classList.add('rows-5'); }
+            letterBankContainer.classList.remove('rows-2', 'rows-3', 'rows-4', 'rows-5', 'rows-11');
+
+            if (wordLength >= 5 && wordLength <= 8) {
+                letterBankContainer.classList.add('rows-2'); // 5-8 harf (2 satır)
+            } else if ((wordLength >= 9 && wordLength <= 10) || (wordLength >= 12 && wordLength <= 14)) {
+                letterBankContainer.classList.add('rows-3'); // 9-10, 12-14 harf (3 satır)
+            } else if (wordLength === 11) {
+                letterBankContainer.classList.add('rows-11'); // 11 harf (3 satır -> 4-4-3)
+            } else if (wordLength === 15) {
+                letterBankContainer.classList.add('rows-5'); // 15 harf (5 satır)
+            } else if (wordLength >= 16) {
+                letterBankContainer.classList.add('rows-4'); // 16+ harf (4 satır)
+            }
+            // 4 veya daha az harf için sınıf eklenmez (varsayılan 1 satır)
+            // --- ---
+
             originalWord = currentWord.ar;
             fullWordChars = Array.from(originalWord).map((char, index) => ({ char: char, id: `${char}-${index}` }));
             const letterCount = fullWordChars.length;
